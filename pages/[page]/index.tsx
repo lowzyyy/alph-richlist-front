@@ -5,7 +5,7 @@ import Wallets from "@/src/components/Wallets/Wallets";
 import Navigation from "@/src/components/Wallets/Navigation/Navigation";
 import Head from "next/head";
 
-function index() {
+function Page() {
   const router = useRouter();
   const { page } = router.query;
   return (
@@ -25,4 +25,4 @@ function index() {
   );
 }
 
-export default index;
+export default Page;

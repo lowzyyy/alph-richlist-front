@@ -46,21 +46,21 @@ function Wallets({ pageNum }: Props) {
       })
   );
 
-  useEffect(() => {
-    window.addEventListener("resize", resizeListener);
-    resizeListener();
-    return () => window.removeEventListener("resize", resizeListener);
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener("resize", resizeListener);
+  //   resizeListener();
+  //   return () => window.removeEventListener("resize", resizeListener);
+  // }, []);
 
-  const resizeListener = useCallback(() => {
-    if (window.innerWidth < screenWidth.mobilePort) setWalletWidth(wallWith.mobile);
-    else if (
-      window.innerWidth < screenWidth.tabletSmall &&
-      window.innerWidth >= screenWidth.mobilePort
-    )
-      setWalletWidth(wallWith.tablet);
-    else setWalletWidth(wallWith.other);
-  }, []);
+  // const resizeListener = useCallback(() => {
+  //   if (window.innerWidth < screenWidth.mobilePort) setWalletWidth(wallWith.mobile);
+  //   else if (
+  //     window.innerWidth < screenWidth.tabletSmall &&
+  //     window.innerWidth >= screenWidth.mobilePort
+  //   )
+  //     setWalletWidth(wallWith.tablet);
+  //   else setWalletWidth(wallWith.other);
+  // }, []);
 
   if (isLoading || isLoadingPrice) return <WalletsSkeleton></WalletsSkeleton>;
   if (errorAddresses) return <p>Error loading addresses</p>;
