@@ -1,5 +1,6 @@
 export {};
-export const STATS_API = "https://alephium.ono.re/api/stats/addresses";
+// export const STATS_API = "https://alephium.ono.re/api/stats/addresses";
+// export const STATS_API = "localhost:3001/addresses";
 export const ALEPHIUM_EXPLORER = "https://explorer.alephium.org";
 export const HOLDINGS_API = "https://alph-holdings.up.railway.app";
 

@@ -30,9 +30,8 @@ const tagColor = {
 };
 function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
   const usdBalance = getUsdBalanceString(w.balance, alphPrice);
-  const isItGenesis = genesis_addresses.some((el) => w.address === el);
-  const router = useRouter();
-  // console.log(router);
+  // const isItGenesis = genesis_addresses.some((el) => w.address === el);
+  const isItGenesis = w.isGenesis;
 
   //tagName
   let tagName =
@@ -53,8 +52,9 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
     w.address.slice(0, walletLen) + (walletLen >= w.address.length ? "" : "...");
 
   // balanceHint
-  const [balance, unit, _] = w.balanceHint.split(" ");
-  const balanceHint = balance + unit;
+  // const [balance, unit, _] = w.balanceHint
+  // const balanceHint = balance + unit;
+  const balanceHint = w.balanceHint;
   const tag = tagName && (
     <span
       className={` rounded-md p-1  text-xs text-black xl:text-sm  ${
@@ -64,6 +64,9 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
       {tagName}
     </span>
   );
+  // ins and outs
+  const ins = w.ins;
+  const outs = w.outs;
   // tx locale date
   const options: Intl.DateTimeFormatOptions = {
     month: "numeric",
@@ -102,17 +105,17 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
             Balance:{" "}
             <span className="font-medium">{`${balanceHint} ($${usdBalance})`}</span>
           </span>
-          <span className=" text-xs xs:inline xs:text-sm sm:hidden">{`Ins: ${"999.9k"} | Outs: ${"999.9k"}`}</span>
+          <span className=" text-xs xs:inline xs:text-sm sm:hidden">{`Ins: ${ins} | Outs: ${outs}`}</span>
         </div>
       </div>
       <div className=" [&>*]:  hidden sm:flex [&>*]:border-r [&>*]:border-gray-400 [&>*]:p-2">
         <div className="flex w-16 flex-col lg:w-20">
           <span>Ins</span>
-          <span>999K</span>
+          <span>{ins}</span>
         </div>
         <div className="flex w-16 flex-col border-none  md:border-solid lg:w-20">
           <span>Outs</span>
-          <span>20</span>
+          <span>{outs}</span>
         </div>
         <div className="hidden w-24 flex-col lg:flex lg:w-28">
           <span>First In</span>

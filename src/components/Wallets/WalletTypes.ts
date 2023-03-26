@@ -1,17 +1,19 @@
 export type Wallet = {
   address: string;
-  created_on: string;
   updated_on: string;
-  first_tx_recv: string;
-  last_tx_recv: string;
-  first_tx_send: string | null;
-  last_tx_send: string | null;
+  first_tx_recv: number;
+  last_tx_recv: number;
+  first_tx_send: number | null;
+  last_tx_send: number | null;
   balance: number;
   balanceHint: string;
+  locked_balance: number;
+  lockedHint: string;
   name: string | null;
   type: string | null;
-  // insNumber: string; //--->THIS WOULD BE COOL :D
-  // outsNumber: string; //
+  ins: number;
+  outs: number;
+  isGenesis: boolean;
 };
 
 export type Addresses = {

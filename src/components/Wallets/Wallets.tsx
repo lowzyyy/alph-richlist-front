@@ -6,7 +6,6 @@ import WalletsList from "./WalletsList";
 // helpers
 import { Wallet, Addresses } from "./WalletTypes";
 
-import { STATS_API } from "@/src/globalHelpers";
 import WalletsSkeleton from "./WalletsSkeleton";
 
 enum screenWidth {
@@ -25,17 +24,21 @@ type Props = {
   children?: ReactNode;
   wallets?: Wallet[];
   pageNum: number;
+  STATS_API: string;
 };
 
-function Wallets({ pageNum }: Props) {
+function Wallets({ pageNum, STATS_API }: Props) {
   const [walletWidth, setWalletWidth] = useState(wallWith.mobile);
-
   const {
     data,
     isLoading,
     error: errorAddresses,
-  } = useSWR<Addresses>(`${STATS_API}?page=${pageNum}&size=100`, (url) =>
-    fetch(url).then((res) => res.json())
+  } = useSWR<Wallet[]>(`${STATS_API}/addresses?page=${pageNum}&size=100`, (url) =>
+    fetch(url, {
+      headers: {
+        "ngrok-skip-browser-warning": "true",
+      },
+    }).then((res) => res.json())
   );
   const { data: alphPrice, isLoading: isLoadingPrice } = useSWR<number>(
     "https://api.coingecko.com/api/v3/coins/alephium",
@@ -46,28 +49,15 @@ function Wallets({ pageNum }: Props) {
       })
   );
 
-  // useEffect(() => {
-  //   window.addEventListener("resize", resizeListener);
-  //   resizeListener();
-  //   return () => window.removeEventListener("resize", resizeListener);
-  // }, []);
-
-  // const resizeListener = useCallback(() => {
-  //   if (window.innerWidth < screenWidth.mobilePort) setWalletWidth(wallWith.mobile);
-  //   else if (
-  //     window.innerWidth < screenWidth.tabletSmall &&
-  //     window.innerWidth >= screenWidth.mobilePort
-  //   )
-  //     setWalletWidth(wallWith.tablet);
-  //   else setWalletWidth(wallWith.other);
-  // }, []);
-
   if (isLoading || isLoadingPrice) return <WalletsSkeleton></WalletsSkeleton>;
   if (errorAddresses) return <p>Error loading addresses</p>;
   return (
     <div>
+      {/* <p className="mb-2 mt-3 text-xs text-slate-800 xs:text-sm">
+        Last updated: {data?.last_update}
+      </p> */}
       <WalletsList
-        wallets={data?.addresses as Wallet[]}
+        wallets={data as Wallet[]}
         walletLen={walletWidth}
         alphPrice={alphPrice as number}
         pageNumber={pageNum}
