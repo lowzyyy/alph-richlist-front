@@ -12,7 +12,6 @@ import Wallets from "../src/components/Wallets/Wallets";
 import { Wallet } from "@/src/components/Wallets/WalletTypes";
 import Navigation from "@/src/components/Wallets/Navigation/Navigation";
 import Holdings from "@/src/components/Holdings/Holdings";
-import { setStatsApi, STATS_API } from "@/src/globalHelpers";
 
 type Props = {
   url: string;
