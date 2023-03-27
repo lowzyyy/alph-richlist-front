@@ -42,7 +42,10 @@ export async function getServerSideProps() {
   if (!ngrokRes.ok) console.log(`ERROR NGROK API: ${ngrokRes.status}`);
 
   const { tunnels } = await ngrokRes.json();
-  const url: string = tunnels[1].public_url;
+  const url: string = tunnels.find((t: any) =>
+    t.public_url.startsWith("https")
+  ).public_url;
+
   return {
     props: { url }, // will be passed to the page component as props
   };
