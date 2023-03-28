@@ -5,7 +5,6 @@ import {
 } from "@/src/globalHelpers";
 import { Roboto_Mono } from "next/font/google";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
 // my imports
 import { Wallet } from "./WalletTypes";
@@ -28,9 +27,15 @@ const tagColor = {
   Exchange: "bg-rose-400",
   Other: "bg-blue-400",
 };
+
+const formatInsOuts = (amount: number) => {
+  if (amount > 1_000_000) return (amount / 1_000_000).toFixed(1) + "M";
+  if (amount > 1_000) return (amount / 1_000).toFixed(1) + "K";
+  return amount;
+};
+
 function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
   const usdBalance = getUsdBalanceString(w.balance, alphPrice);
-  // const isItGenesis = genesis_addresses.some((el) => w.address === el);
   const isItGenesis = w.isGenesis;
 
   //tagName
@@ -51,9 +56,6 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
   const addressShort =
     w.address.slice(0, walletLen) + (walletLen >= w.address.length ? "" : "...");
 
-  // balanceHint
-  // const [balance, unit, _] = w.balanceHint
-  // const balanceHint = balance + unit;
   const balanceHint = w.balanceHint;
   const tag = tagName && (
     <span
@@ -65,8 +67,8 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
     </span>
   );
   // ins and outs
-  const ins = w.ins;
-  const outs = w.outs;
+  const ins = formatInsOuts(w.ins);
+  const outs = formatInsOuts(w.outs);
   // tx locale date
   const options: Intl.DateTimeFormatOptions = {
     month: "numeric",
@@ -83,7 +85,7 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
     : "----------";
   return (
     <div
-      className={`border-b  border-black bg-stone-50 py-2 px-2 text-sm first:rounded-t-md last:rounded-b-md last:border-b-0 xs:flex xs:justify-between lg:text-base xl:p-4`}
+      className={`border-b  border-black bg-stone-50 p-1 text-sm first:rounded-t-md last:rounded-b-md last:border-b-0 xs:flex xs:justify-between xs:p-2 lg:text-base xl:p-4`}
     >
       <div className="flex flex-col gap-2 xs:w-full sm:w-auto">
         <span className={`flex justify-between sm:gap-1`}>
@@ -103,9 +105,14 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
         <div className="flex items-center justify-between ">
           <span>
             Balance:{" "}
-            <span className="font-medium">{`${balanceHint} ($${usdBalance})`}</span>
+            <span className="font-medium">{`${balanceHint} ${
+              alphPrice ? `($${usdBalance})` : ""
+            }`}</span>
           </span>
-          <span className=" text-xs xs:inline xs:text-sm sm:hidden">{`Ins: ${ins} | Outs: ${outs}`}</span>
+          <span className=" text-xs  xs:text-sm sm:hidden">
+            <span className="inline-block w-[70px] border-r border-gray-400 p-1 xs:w-[79px]">{`Ins: ${ins}`}</span>
+            <span className="inline-block w-[77px] p-1 xs:w-[88px]">{`Outs: ${outs}`}</span>
+          </span>
         </div>
       </div>
       <div className=" [&>*]:  hidden sm:flex [&>*]:border-r [&>*]:border-gray-400 [&>*]:p-2">

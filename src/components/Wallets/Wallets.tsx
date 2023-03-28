@@ -33,7 +33,7 @@ function Wallets({ pageNum, STATS_API }: Props) {
     data,
     isLoading,
     error: errorAddresses,
-  } = useSWR<Wallet[]>(`${STATS_API}/addresses?page=${pageNum}&size=100`, (url) =>
+  } = useSWR<Addresses>(`${STATS_API}/addresses?page=${pageNum}&size=100`, (url) =>
     fetch(url, {
       headers: {
         "ngrok-skip-browser-warning": "true",
@@ -48,18 +48,28 @@ function Wallets({ pageNum, STATS_API }: Props) {
         return info.market_data.current_price.usd;
       })
   );
-
   if (isLoading || isLoadingPrice) return <WalletsSkeleton></WalletsSkeleton>;
+  // if (isLoading) return <WalletsSkeleton></WalletsSkeleton>;
   if (errorAddresses) return <p>Error loading addresses</p>;
   return (
     <div>
-      {/* <p className="mb-2 mt-3 text-xs text-slate-800 xs:text-sm">
-        Last updated: {data?.last_update}
-      </p> */}
+      <div className="mb-2 mt-3 sm:flex sm:justify-between">
+        <p className=" text-xs text-slate-800 xs:text-sm">
+          Powered by{" "}
+          <a
+            className="font-semibold text-cyan-600"
+            href="https://www.coingecko.com/en/api"
+          >
+            CoinGecko API
+          </a>
+        </p>
+        <p className=" text-xs text-slate-800 xs:text-sm">Updated: {data?.last_update}</p>
+      </div>
       <WalletsList
-        wallets={data as Wallet[]}
+        wallets={data?.addresses as Wallet[]}
         walletLen={walletWidth}
         alphPrice={alphPrice as number}
+        // alphPrice={0.25}
         pageNumber={pageNum}
       ></WalletsList>
     </div>

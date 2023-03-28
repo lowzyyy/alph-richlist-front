@@ -9,7 +9,6 @@ const inter = Inter({
 // components
 import Wallets from "../src/components/Wallets/Wallets";
 //types
-import { Wallet } from "@/src/components/Wallets/WalletTypes";
 import Navigation from "@/src/components/Wallets/Navigation/Navigation";
 import Holdings from "@/src/components/Holdings/Holdings";
 
