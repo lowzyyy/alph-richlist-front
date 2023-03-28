@@ -11,7 +11,9 @@ type Props = {
 
 function Page({ url }: Props) {
   const router = useRouter();
-  const { page } = router.query;
+  const { sort, order, filter, page } = router.query;
+  let queryMode: "default" | "filter" = "default";
+  if (filter) queryMode = "filter";
 
   return (
     <>
@@ -22,9 +24,9 @@ function Page({ url }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Navigation pageNumber={+(page as string)}></Navigation>
+        <Navigation pageNumber={+(page as string)} queryMode={queryMode}></Navigation>
         <Wallets pageNum={+(page as string)} STATS_API={url}></Wallets>
-        <Navigation pageNumber={+(page as string)}></Navigation>
+        <Navigation pageNumber={+(page as string)} queryMode={queryMode}></Navigation>
       </div>
     </>
   );

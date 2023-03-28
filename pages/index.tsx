@@ -11,12 +11,20 @@ import Wallets from "../src/components/Wallets/Wallets";
 //types
 import Navigation from "@/src/components/Wallets/Navigation/Navigation";
 import Holdings from "@/src/components/Holdings/Holdings";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 type Props = {
   url: string;
 };
 
 export default function Home({ url }: Props) {
+  const [maxPages, setMaxPages] = useState(100);
+  const router = useRouter();
+  const { sort, order, filter } = router.query;
+  let queryMode: "default" | "filter" = "default";
+  if (filter) queryMode = "filter";
+
   return (
     <>
       <Head>
@@ -26,9 +34,9 @@ export default function Home({ url }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Holdings />
-      <Navigation pageNumber={1}></Navigation>
+      <Navigation pageNumber={1} queryMode={queryMode}></Navigation>
       <Wallets pageNum={1} STATS_API={url}></Wallets>
-      <Navigation pageNumber={1}></Navigation>
+      <Navigation pageNumber={1} queryMode={queryMode}></Navigation>
     </>
   );
 }

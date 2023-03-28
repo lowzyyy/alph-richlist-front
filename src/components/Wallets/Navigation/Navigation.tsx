@@ -11,6 +11,7 @@ import PageNumberInput from "./PageNumberInput";
 
 type Props = {
   pageNumber: number;
+  queryMode: string;
 };
 
 enum NavDir {
@@ -23,22 +24,32 @@ enum NavDir {
 const pageStart = 1;
 const pageEnd = 100;
 
-function Navigation({ pageNumber }: Props) {
+function Navigation({ pageNumber, queryMode }: Props) {
   const router = useRouter();
+  let queryString = "";
+  const { sort, order } = router.query;
+  if (sort && order) {
+    queryString = `?sort=${sort}&order=${order}`;
+  } else if (sort && !order) queryString = `?sort=${sort}&order=desc`;
+
   // callbacks
   const pageCallback = (e: any) => {
     switch (+e.currentTarget.dataset.dir) {
       case NavDir.backward:
-        router.push(`/pages/${pageNumber === pageStart ? 1 : pageNumber - 1}`);
+        router.push(
+          `/pages/${pageNumber === pageStart ? 1 : pageNumber - 1}${queryString}`
+        );
         break;
       case NavDir.forward:
-        router.push(`/pages/${pageNumber === pageEnd ? 100 : pageNumber + 1}`);
+        router.push(
+          `/pages/${pageNumber === pageEnd ? 100 : pageNumber + 1}${queryString}`
+        );
         break;
       case NavDir.start:
-        router.push("/pages/1");
+        router.push(`/pages/1${queryString}`);
         break;
       case NavDir.end:
-        router.push("/pages/100");
+        router.push(`/pages/100${queryString}`);
       default:
         break;
     }
@@ -73,7 +84,11 @@ function Navigation({ pageNumber }: Props) {
           </span>
         </div>
 
-        <PageNumberInput pageNumber={pageNumber}></PageNumberInput>
+        <PageNumberInput
+          pageNumber={pageNumber}
+          queryMode={queryMode}
+          maxPage={120}
+        ></PageNumberInput>
 
         <div className="flex gap-4">
           <span
