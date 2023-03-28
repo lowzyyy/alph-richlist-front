@@ -55,29 +55,29 @@ function Wallets({ pageNum, STATS_API }: Props) {
         },
       }).then((res) => res.json())
   );
-  // const { data: alphPrice, isLoading: isLoadingPrice } = useSWR<number>(
-  //   "https://api.coingecko.com/api/v3/coins/alephium",
-  //   (url) =>
-  //     fetch(url).then(async (res) => {
-  //       const info = await res.json();
-  //       return info.market_data.current_price.usd;
-  //     }),
-  //   {
-  //     onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-  //       // Never retry on 404/403
-  //       if (error.status === 404) return;
-  //       if (error.status === 403) return;
+  const { data: alphPrice, isLoading: isLoadingPrice } = useSWR<number>(
+    "https://api.coingecko.com/api/v3/coins/alephium",
+    (url) =>
+      fetch(url).then(async (res) => {
+        const info = await res.json();
+        return info.market_data.current_price.usd;
+      }),
+    {
+      onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+        // Never retry on 404/403
+        if (error.status === 404) return;
+        if (error.status === 403) return;
 
-  //       // Only retry up to 3 times.
-  //       if (retryCount >= 3) return;
+        // Only retry up to 3 times.
+        if (retryCount >= 3) return;
 
-  //       // Retry after 5 seconds.
-  //       setTimeout(() => revalidate({ retryCount }), 5000);
-  //     },
-  //   }
-  // );
-  // if (isLoading || isLoadingPrice) return <WalletsSkeleton></WalletsSkeleton>;
-  if (isLoading) return <WalletsSkeleton></WalletsSkeleton>;
+        // Retry after 5 seconds.
+        setTimeout(() => revalidate({ retryCount }), 5000);
+      },
+    }
+  );
+  if (isLoading || isLoadingPrice) return <WalletsSkeleton></WalletsSkeleton>;
+  // if (isLoading) return <WalletsSkeleton></WalletsSkeleton>;
   if (errorAddresses) return <p>Error loading addresses</p>;
   return (
     <div>
@@ -85,8 +85,8 @@ function Wallets({ pageNum, STATS_API }: Props) {
       <WalletsList
         wallets={data?.addresses as Wallet[]}
         walletLen={walletWidth}
-        // alphPrice={alphPrice as number}
-        alphPrice={0.25}
+        alphPrice={alphPrice as number}
+        // alphPrice={0.25}
         pageNumber={pageNum}
       ></WalletsList>
       <div className="mb-2 mt-3 sm:flex sm:justify-between">
