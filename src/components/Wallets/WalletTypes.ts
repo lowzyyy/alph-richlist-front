@@ -14,12 +14,15 @@ export type Wallet = {
   ins: number;
   outs: number;
   isGenesis: boolean;
+  isReserved: boolean;
 };
 
 export type Addresses = {
-  active_addresess: number;
+  active_addresses: number;
   addresses: Wallet[];
   last_update: string;
-  total_balance: string;
-  total_locked: string;
+  // total_balance: string;
+  // total_locked: string;
 };
+
+export type queryParam = string | string[] | undefined;

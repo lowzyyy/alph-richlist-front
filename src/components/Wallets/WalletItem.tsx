@@ -1,13 +1,19 @@
-import {
-  ALEPHIUM_EXPLORER,
-  genesis_addresses,
-  getUsdBalanceString,
-} from "@/src/globalHelpers";
+import React from "react";
 import { Roboto_Mono } from "next/font/google";
 import Link from "next/link";
-import React from "react";
-// my imports
+
+// globals
+import {
+  ALEPHIUM_EXPLORER,
+  formatInsOuts,
+  formatLocked,
+  getUsdBalanceString,
+} from "@/src/globalHelpers";
+// components
 import { Wallet } from "./WalletTypes";
+import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
+import { LockSimple } from "@phosphor-icons/react";
+import { setBalanceType } from "@/src/store/pagesSlice";
 
 const robMono = Roboto_Mono({
   subsets: ["latin"],
@@ -25,20 +31,17 @@ const tagColor = {
   Genesis: "bg-violet-300",
   Pool: "bg-green-400",
   Exchange: "bg-rose-400",
+  Reserved: "bg-orange-300",
   Other: "bg-blue-400",
 };
 
-const formatInsOuts = (amount: number) => {
-  if (amount > 1_000_000) return (amount / 1_000_000).toFixed(1) + "M";
-  if (amount > 1_000) return (amount / 1_000).toFixed(1) + "K";
-  return amount;
-};
-
 function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
-  const usdBalance = getUsdBalanceString(w.balance, alphPrice);
+  const balanceType = useAppSelector((state) => state.pages.balanceType);
+  const dispatch = useAppDispatch();
   const isItGenesis = w.isGenesis;
+  const isItReserved = w.isReserved;
 
-  //tagName
+  // tag
   let tagName =
     w.name && w.name.includes(".com")
       ? w.name.replace(".com", "")
@@ -46,29 +49,38 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
       ? w.name
       : isItGenesis
       ? "Genesis"
+      : isItReserved
+      ? "Reserved"
       : null;
   tagName = tagName ? tagName[0].toUpperCase() + tagName.slice(1) : null;
   let tagType = "Other";
   if (w.type) tagType = w.type;
   else if (tagName === "Genesis") tagType = "Genesis";
-
-  // address
-  const addressShort =
-    w.address.slice(0, walletLen) + (walletLen >= w.address.length ? "" : "...");
-
-  const balanceHint = w.balanceHint;
+  else if (tagName === "Reserved") tagType = "Reserved";
   const tag = tagName && (
     <span
       className={` rounded-md p-1  text-xs text-black xl:text-sm  ${
-        tagColor[tagType as keyof typeof tagColor]
+        tagColor[tagType as keyof typeof tagColor] ?? "bg-blue-400"
       }`}
     >
       {tagName}
     </span>
   );
+
+  // address
+  const addressShort =
+    w.address.slice(0, walletLen) + (walletLen >= w.address.length ? "" : "...");
+
+  // balance
+  const balanceHint = w.balanceHint;
+  const usdBalance = getUsdBalanceString(w.balance, alphPrice);
+  const usdBalanceHint = alphPrice ? `($${usdBalance})` : "";
+  const lockedBalanceHint =
+    window.innerWidth < 400 ? formatLocked(w.lockedHint) : w.lockedHint;
+
   // ins and outs
-  const ins = formatInsOuts(w.ins);
-  const outs = formatInsOuts(w.outs);
+  const ins = formatInsOuts(w.ins, window.innerWidth);
+  const outs = formatInsOuts(w.outs, window.innerWidth);
   // tx locale date
   const options: Intl.DateTimeFormatOptions = {
     month: "numeric",
@@ -83,6 +95,10 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
   const firstOut = w.first_tx_send
     ? new Date(w.first_tx_send).toLocaleString(undefined, options)
     : "----------";
+
+  const onBalance = () => {
+    dispatch(setBalanceType(balanceType === "usd" ? "locked" : "usd"));
+  };
   return (
     <div
       className={`border-b  border-black bg-stone-50 p-1 text-sm first:rounded-t-md last:rounded-b-md last:border-b-0 xs:flex xs:justify-between xs:p-2 lg:text-base xl:p-4`}
@@ -103,11 +119,21 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
           <span>{tag}</span>
         </span>
         <div className="flex items-center justify-between ">
-          <span>
+          <span className="flex gap-1">
             Balance:{" "}
-            <span className="font-medium">{`${balanceHint} ${
-              alphPrice ? `($${usdBalance})` : ""
-            }`}</span>
+            <span
+              onClick={onBalance}
+              className="flex cursor-pointer items-center font-medium"
+            >
+              {`${balanceHint}`}{" "}
+              {balanceType === "locked" && lockedBalanceHint !== "0" && (
+                <>
+                  (<LockSimple size={12} weight="fill" className="text-red-500" />
+                  {`${lockedBalanceHint}`})
+                </>
+              )}
+              {balanceType === "usd" && <>{`${usdBalanceHint}`}</>}
+            </span>
           </span>
           <span className=" text-xs  xs:text-sm sm:hidden">
             <span className="inline-block w-[70px] border-r border-gray-400 p-1 xs:w-[79px]">{`Ins: ${ins}`}</span>

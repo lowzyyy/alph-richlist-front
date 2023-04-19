@@ -1,17 +1,20 @@
+import React from "react";
 import { useRouter } from "next/router";
 import {
   CaretCircleDoubleRight,
   CaretCircleDoubleLeft,
   CaretCircleLeft,
   CaretCircleRight,
-} from "phosphor-react";
+} from "@phosphor-icons/react";
 
-import React from "react";
+// components
 import PageNumberInput from "./PageNumberInput";
+// store
+import { useAppSelector } from "@/src/store/storeHooks";
+import { getCopyQuery } from "@/src/store/urlQueriesCopy";
 
 type Props = {
   pageNumber: number;
-  queryMode: string;
 };
 
 enum NavDir {
@@ -22,34 +25,24 @@ enum NavDir {
 }
 
 const pageStart = 1;
-const pageEnd = 100;
-
-function Navigation({ pageNumber, queryMode }: Props) {
+function Navigation({ pageNumber }: Props) {
   const router = useRouter();
-  let queryString = "";
-  const { sort, order } = router.query;
-  if (sort && order) {
-    queryString = `?sort=${sort}&order=${order}`;
-  } else if (sort && !order) queryString = `?sort=${sort}&order=desc`;
-
+  const allQueries = useAppSelector(getCopyQuery);
+  const pageEnd = useAppSelector((state) => state.pages.pageEnd);
   // callbacks
   const pageCallback = (e: any) => {
     switch (+e.currentTarget.dataset.dir) {
       case NavDir.backward:
-        router.push(
-          `/pages/${pageNumber === pageStart ? 1 : pageNumber - 1}${queryString}`
-        );
+        router.push(`/pages/${pageNumber - 1}?${allQueries}`);
         break;
       case NavDir.forward:
-        router.push(
-          `/pages/${pageNumber === pageEnd ? 100 : pageNumber + 1}${queryString}`
-        );
+        router.push(`/pages/${pageNumber + 1}?${allQueries}`);
         break;
       case NavDir.start:
-        router.push(`/pages/1${queryString}`);
+        router.push(`/pages/1?${allQueries}`);
         break;
       case NavDir.end:
-        router.push(`/pages/100${queryString}`);
+        router.push(`/pages/${pageEnd}?${allQueries}`);
       default:
         break;
     }
@@ -86,8 +79,7 @@ function Navigation({ pageNumber, queryMode }: Props) {
 
         <PageNumberInput
           pageNumber={pageNumber}
-          queryMode={queryMode}
-          maxPage={120}
+          maxPage={pageEnd as number}
         ></PageNumberInput>
 
         <div className="flex gap-4">

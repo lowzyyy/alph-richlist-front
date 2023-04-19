@@ -3,11 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 
 type Props = {
   pageNumber: number;
-  queryMode: string;
   maxPage: number;
 };
-function PageNumberInput({ pageNumber, queryMode, maxPage }: Props) {
-  const maxPageSize = queryMode === "default" ? 100 : maxPage;
+function PageNumberInput({ pageNumber, maxPage }: Props) {
   const [pageNum, setPageNum] = useState<string>(pageNumber + "");
   const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const validInput = +pageNum && +pageNum > 0;
@@ -26,7 +24,11 @@ function PageNumberInput({ pageNumber, queryMode, maxPage }: Props) {
     if (!validInput) return;
     let inputNum = parseInt(pageNum);
     if (inputNum < 0) inputNum = 1;
-    else if (inputNum > 100) inputNum = 100;
+    else if (inputNum > maxPage) {
+      if (pageNumber === 1) setPageNum("1");
+      inputNum = maxPage;
+    }
+    if (inputNum === pageNumber) return;
     inputRef.current.value = "";
     router.push(`/pages/${inputNum}`);
   };
@@ -44,7 +46,7 @@ function PageNumberInput({ pageNumber, queryMode, maxPage }: Props) {
         }`}
         value={pageNum}
       />
-      {`  /${maxPageSize}`}
+      {`  /${maxPage}`}
       <input type="submit" className="hidden" />
     </form>
   );

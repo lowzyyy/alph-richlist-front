@@ -1,9 +1,12 @@
-import React from "react";
-
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import Wallets from "@/src/components/Wallets/Wallets";
-import Navigation from "@/src/components/Wallets/Navigation/Navigation";
 import Head from "next/head";
+// store
+import { useAppDispatch } from "@/src/store/storeHooks";
+import { setAllQueriesURL } from "@/src/store/urlQueriesSlice";
+// components
+import Wallets from "@/src/components/Wallets/Wallets";
+import { copyState } from "@/src/store/urlQueriesCopy";
 
 type Props = {
   url: string;
@@ -11,22 +14,35 @@ type Props = {
 
 function Page({ url }: Props) {
   const router = useRouter();
-  const { sort, order, filter, page } = router.query;
-  let queryMode: "default" | "filter" = "default";
-  if (filter) queryMode = "filter";
+  const dispatch = useAppDispatch();
 
+  const { page, sort, order, filter, age, balance, zeroOuts, dormant } = router.query;
+  useEffect(() => {
+    dispatch(
+      setAllQueriesURL({
+        sortOrder: { sort, order },
+        filter,
+        age,
+        balance,
+        zeroOuts,
+        dormant,
+      })
+    );
+    dispatch(copyState());
+  }, [router.query]);
+
+  const title = `Alph rich list page ${page}`;
+  const pageNumber = +(page as string);
   return (
     <>
       <Head>
-        <title>Alph rich list {`page ${page}`}</title>
+        <title>{title}</title>
         <meta name="description" content="Alephium rich list" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Navigation pageNumber={+(page as string)} queryMode={queryMode}></Navigation>
-        <Wallets pageNum={+(page as string)} STATS_API={url}></Wallets>
-        <Navigation pageNumber={+(page as string)} queryMode={queryMode}></Navigation>
+        <Wallets pageNum={pageNumber} STATS_API={url}></Wallets>
       </div>
     </>
   );

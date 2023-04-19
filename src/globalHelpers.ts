@@ -1,10 +1,12 @@
 export {};
+// APIs
 // export const STATS_API = "https://alephium.ono.re/api/stats/addresses";
 // export const STATS_API = "localhost:3001/addresses";
 export const ALEPHIUM_EXPLORER = "https://explorer.alephium.org";
-export const HOLDINGS_API = "https://alph-holdings.up.railway.app";
+// export const HOLDINGS_API = "https://alph-holdings.up.railway.app";
 
-const ALPH_BASE = 10 ** 18;
+// dollar balance format
+export const ALPH_BASE = 10 ** 18;
 const BILLION = 1_000_000_000;
 const MILLION = 1_000_000;
 const THOUSAND = 1_000;
@@ -18,6 +20,36 @@ export const getUsdBalanceString = (alphBalance: number, alphPrice: number): str
   return dollarBalance.toFixed(decimals);
 };
 
+// locked balance format
+// example1: 234.07M -> 234.0 -> 234M
+// example2: 234.66 -> 234.6
+export const formatLocked = (amount: string) => {
+  let formatted;
+  if (!isFinite(amount.slice(-1) as unknown as number)) {
+    formatted = amount.slice(0, -2);
+    return (
+      (formatted.slice(-1) === "0" ? formatted.slice(0, -2) : formatted) +
+      amount.slice(-1)
+    );
+  } else {
+    formatted = amount.slice(0, -1);
+    return formatted.slice(-1) === "0" ? formatted.slice(0, -2) : formatted;
+  }
+};
+
+// ins out format
+export const formatInsOuts = (amount: number, windowWidth: number) => {
+  let decimals = 1;
+  decimals = windowWidth > 1024 ? 2 : 1;
+  if (amount > 1_000_000) return (amount / 1_000_000).toFixed(decimals) + "M";
+  if (amount > 1_000) return (amount / 1_000).toFixed(decimals) + "K";
+  return amount;
+};
+
+// iconSizes
+export const filterCbSize = 24;
+
+// Genesis and reserved addresses
 export const genesis_addresses = [
   "1FmM8ehu5tF16oTSMS3d11nAfjmMvkinLPCMR7iE9HqVk",
   "1618ZVEWNfxXSFx7r66ScpE1rYKfmMkjBGo1ybLGhvNWi",

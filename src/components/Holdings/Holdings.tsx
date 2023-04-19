@@ -15,15 +15,20 @@ import { Bar } from "react-chartjs-2";
 //my imports
 import { AddressHoldings } from "./HoldingsTypes";
 import { labels, options } from "./graphSettings";
-import { HOLDINGS_API } from "@/src/globalHelpers";
 
-function Holdings() {
+type Props = {
+  HOLDINGS_API: string;
+};
+
+function Holdings({ HOLDINGS_API }: Props) {
   const {
     data: holdingsData,
     isLoading,
     error,
   } = useSWR<AddressHoldings[]>(`${HOLDINGS_API}/holdings`, (url) =>
-    fetch(url).then((res) => res.json())
+    fetch(url, { headers: { "ngrok-skip-browser-warning": "true" } }).then((res) =>
+      res.json()
+    )
   );
   let holdings = holdingsData ? holdingsData : [null, null];
 
