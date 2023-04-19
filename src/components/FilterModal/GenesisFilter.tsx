@@ -1,4 +1,4 @@
-import { filterCbSize } from "@/src/globalHelpers";
+import { filterCbColor, filterCbSize } from "@/src/globalHelpers";
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { setFilter } from "@/src/store/urlQueriesSlice";
 import { CheckSquare, Square } from "@phosphor-icons/react";
@@ -16,13 +16,13 @@ function GenesisFilter() {
 
   const genesisBox =
     genesis.filterVal === "justgenesis" ? (
-      <CheckSquare size={filterCbSize} weight="fill" />
+      <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
     ) : (
       <Square size={filterCbSize} />
     );
   const allBox =
     genesis.filterVal === "all" ? (
-      <CheckSquare size={filterCbSize} weight="fill" />
+      <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
     ) : (
       <Square size={filterCbSize} />
     );

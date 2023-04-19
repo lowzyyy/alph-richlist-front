@@ -1,4 +1,4 @@
-import { filterCbSize } from "@/src/globalHelpers";
+import { filterCbColor, filterCbSize } from "@/src/globalHelpers";
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { setDormant } from "@/src/store/urlQueriesSlice";
 import { CheckSquare, Square } from "@phosphor-icons/react";
@@ -10,7 +10,7 @@ function Dormant() {
   const dormant = useAppSelector((state) => state.urlQueries.dormant);
   const dispatch = useAppDispatch();
   const checkbox = dormant.checked ? (
-    <CheckSquare size={filterCbSize} weight="fill" />
+    <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
   ) : (
     <Square size={filterCbSize} />
   );

@@ -48,6 +48,7 @@ export const formatInsOuts = (amount: number, windowWidth: number) => {
 
 // iconSizes
 export const filterCbSize = 24;
+export const filterCbColor = "text-indigo-500";
 
 // Genesis and reserved addresses
 export const genesis_addresses = [

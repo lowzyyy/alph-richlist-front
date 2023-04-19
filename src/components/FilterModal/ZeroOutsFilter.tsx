@@ -1,4 +1,4 @@
-import { filterCbSize } from "@/src/globalHelpers";
+import { filterCbColor, filterCbSize } from "@/src/globalHelpers";
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { setZeroOuts } from "@/src/store/urlQueriesSlice";
 import { CheckSquare, Square } from "@phosphor-icons/react";
@@ -12,7 +12,7 @@ function ZeroOutsFilter() {
     dispatch(setZeroOuts({ checked: !zeroOuts.checked }));
   };
   const checkBox = zeroOuts.checked ? (
-    <CheckSquare size={filterCbSize} weight="fill" />
+    <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
   ) : (
     <Square size={filterCbSize} />
   );

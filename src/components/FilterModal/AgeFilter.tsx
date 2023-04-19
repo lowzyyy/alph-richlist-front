@@ -1,4 +1,4 @@
-import { filterCbSize } from "@/src/globalHelpers";
+import { filterCbColor, filterCbSize } from "@/src/globalHelpers";
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { setAge } from "@/src/store/urlQueriesSlice";
 import { CheckSquare, Square } from "@phosphor-icons/react";
@@ -56,13 +56,13 @@ function AgeFilter() {
 
   const ageLessBox =
     age.ageVal.startsWith("<=") && age.checked ? (
-      <CheckSquare size={filterCbSize} weight="fill" />
+      <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
     ) : (
       <Square size={filterCbSize} />
     );
   const ageGreaterBox =
     age.ageVal.startsWith(">=") && age.checked ? (
-      <CheckSquare size={filterCbSize} weight="fill" />
+      <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
     ) : (
       <Square size={filterCbSize} />
     );
