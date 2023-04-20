@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface page {
   pageEnd: number | null;
   balanceType: "usd" | "locked";
+  globalLoading: boolean;
 }
 
 const initialState: page = {
   pageEnd: null,
   balanceType: "usd",
+  globalLoading: false,
 };
 
 export const pagesSlice = createSlice({
@@ -23,9 +25,13 @@ export const pagesSlice = createSlice({
     resetBalanceType: (state) => {
       state.balanceType = "usd";
     },
+    setGlobalLoading: (state, action: PayloadAction<boolean>) => {
+      state.globalLoading = action.payload;
+    },
   },
 });
 
-export const { setPageEnd, setBalanceType, resetBalanceType } = pagesSlice.actions;
+export const { setPageEnd, setBalanceType, resetBalanceType, setGlobalLoading } =
+  pagesSlice.actions;
 
 export default pagesSlice.reducer;

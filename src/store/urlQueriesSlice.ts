@@ -161,7 +161,6 @@ export default urlQueriesSlice.reducer;
 export const loadStateMiddle: Middleware<{}, RootState> =
   (store) => (next) => (action) => {
     if (action.type === "urlQueries/loadSavedQueries") {
-      console.log(action.type);
       store.dispatch(loadTmp(store.getState().urlQueriesCopy));
     } else next(action);
   };

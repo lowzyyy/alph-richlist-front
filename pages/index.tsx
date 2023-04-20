@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 // store
-import { useAppDispatch } from "@/src/store/storeHooks";
+import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { setAllQueriesURL } from "@/src/store/urlQueriesSlice";
 import { copyState } from "@/src/store/urlQueriesCopy";
 
@@ -19,7 +19,7 @@ type Props = {
 export default function Home({ url }: Props) {
   const router = useRouter();
   const dispatch = useAppDispatch();
-
+  const globalLoading = useAppSelector((state) => state.pages.globalLoading);
   const { sort, order, filter, age, balance, zeroOuts, dormant } = router.query;
   useEffect(() => {
     dispatch(
@@ -43,7 +43,7 @@ export default function Home({ url }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Holdings HOLDINGS_API={url} />
+      {!globalLoading && <Holdings HOLDINGS_API={url} />}
       <Wallets pageNum={1} STATS_API={url}></Wallets>
     </>
   );

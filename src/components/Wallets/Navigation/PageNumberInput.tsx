@@ -1,3 +1,5 @@
+import { useAppSelector } from "@/src/store/storeHooks";
+import { getCopyQuery } from "@/src/store/urlQueriesCopy";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -7,6 +9,7 @@ type Props = {
 };
 function PageNumberInput({ pageNumber, maxPage }: Props) {
   const [pageNum, setPageNum] = useState<string>(pageNumber + "");
+  const combinedQuery = useAppSelector(getCopyQuery);
   const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const validInput = +pageNum && +pageNum > 0;
   const router = useRouter();
@@ -25,12 +28,11 @@ function PageNumberInput({ pageNumber, maxPage }: Props) {
     let inputNum = parseInt(pageNum);
     if (inputNum < 0) inputNum = 1;
     else if (inputNum > maxPage) {
-      if (pageNumber === 1) setPageNum("1");
       inputNum = maxPage;
     }
     if (inputNum === pageNumber) return;
     inputRef.current.value = "";
-    router.push(`/pages/${inputNum}`);
+    router.push(`/pages/${inputNum}?${combinedQuery}`);
   };
 
   return (

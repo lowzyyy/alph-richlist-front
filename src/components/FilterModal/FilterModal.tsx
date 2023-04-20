@@ -12,6 +12,7 @@ import AgeFilter from "./AgeFilter";
 import BalanceFilter from "./BalanceFilter";
 import ZeroOutsFilter from "./ZeroOutsFilter";
 import Dormant from "./Dormant";
+import { setGlobalLoading } from "@/src/store/pagesSlice";
 
 const resetBodySettings = () => {
   document.body.style.overflowY = "auto";
@@ -25,6 +26,8 @@ function FilterModal() {
   const combinedQuery = useAppSelector(getQuery);
   // const allQueries = useAppSelector((state) => state.urlQueries);
   // const copy = useAppSelector((state) => state.urlQueriesCopy);
+  // console.log("all: ", allQueries);
+  // console.log("copy: ", copy);
 
   // callbacks
   const onModal = (e: any) => {
@@ -40,8 +43,8 @@ function FilterModal() {
   };
 
   const onApply = () => {
-    dispatch(copyState());
     dispatch(setShowModal());
+    dispatch(setGlobalLoading(true));
     resetBodySettings();
     router.push(`/pages/1?${combinedQuery}`);
   };

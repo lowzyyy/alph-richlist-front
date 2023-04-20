@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import {
   CaretCircleDoubleRight,
   CaretCircleDoubleLeft,
@@ -10,8 +10,9 @@ import {
 // components
 import PageNumberInput from "./PageNumberInput";
 // store
-import { useAppSelector } from "@/src/store/storeHooks";
+import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { getCopyQuery } from "@/src/store/urlQueriesCopy";
+import { setGlobalLoading } from "@/src/store/pagesSlice";
 
 type Props = {
   pageNumber: number;
@@ -29,20 +30,25 @@ function Navigation({ pageNumber }: Props) {
   const router = useRouter();
   const allQueries = useAppSelector(getCopyQuery);
   const pageEnd = useAppSelector((state) => state.pages.pageEnd);
+  const dispatch = useAppDispatch();
   // callbacks
   const pageCallback = (e: any) => {
     switch (+e.currentTarget.dataset.dir) {
       case NavDir.backward:
         router.push(`/pages/${pageNumber - 1}?${allQueries}`);
+        dispatch(setGlobalLoading(true));
         break;
       case NavDir.forward:
         router.push(`/pages/${pageNumber + 1}?${allQueries}`);
+        dispatch(setGlobalLoading(true));
         break;
       case NavDir.start:
         router.push(`/pages/1?${allQueries}`);
+        dispatch(setGlobalLoading(true));
         break;
       case NavDir.end:
         router.push(`/pages/${pageEnd}?${allQueries}`);
+        dispatch(setGlobalLoading(true));
       default:
         break;
     }

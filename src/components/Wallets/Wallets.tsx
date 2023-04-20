@@ -12,7 +12,7 @@ import { Wallet, Addresses } from "./WalletTypes";
 // store
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { getCopyQuery } from "@/src/store/urlQueriesCopy";
-import { setPageEnd } from "@/src/store/pagesSlice";
+import { setGlobalLoading, setPageEnd } from "@/src/store/pagesSlice";
 
 type Props = {
   children?: ReactNode;
@@ -25,6 +25,7 @@ const walletWidth = 18;
 function Wallets({ pageNum, STATS_API }: Props) {
   const combinedCopyQuery = useAppSelector(getCopyQuery);
   const maximumPage = useAppSelector((state) => state.pages.pageEnd);
+  const globalLoading = useAppSelector((state) => state.pages.globalLoading);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -66,6 +67,7 @@ function Wallets({ pageNum, STATS_API }: Props) {
   // set Maximum navigation page
   useEffect(() => {
     if (data) {
+      dispatch(setGlobalLoading(false));
       const numberOfResults =
         data.active_addresses > 10_000
           ? 100
@@ -76,7 +78,7 @@ function Wallets({ pageNum, STATS_API }: Props) {
   }, [data]);
 
   if (isLoading || isLoadingPrice) return <WalletsSkeleton />;
-  // if (isLoading) return <WalletsSkeleton></WalletsSkeleton>;
+  if (!isLoading && !isLoadingPrice && globalLoading) return <WalletsSkeleton />;
   if (errorAddresses) return <p>Error loading addresses</p>;
   return (
     <div>

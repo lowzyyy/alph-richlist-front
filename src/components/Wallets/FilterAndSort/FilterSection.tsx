@@ -5,7 +5,7 @@ import { FadersHorizontal } from "@phosphor-icons/react";
 // store
 import { useAppDispatch } from "@/src/store/storeHooks";
 import { setShowModal } from "@/src/store/filterModalSlice";
-import { resetBalanceType } from "@/src/store/pagesSlice";
+import { resetBalanceType, setGlobalLoading } from "@/src/store/pagesSlice";
 
 function Filter() {
   const router = useRouter();
@@ -13,6 +13,7 @@ function Filter() {
 
   const onReset = () => {
     dispatch(resetBalanceType());
+    dispatch(setGlobalLoading(true));
     router.push(`/pages/1`);
   };
 
