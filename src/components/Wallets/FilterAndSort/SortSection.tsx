@@ -5,7 +5,7 @@ import { SortAscending, SortDescending } from "@phosphor-icons/react";
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { copyState, getCopyQuerySplitSort } from "@/src/store/urlQueriesCopy";
 import { setSortOrder } from "@/src/store/urlQueriesSlice";
-import { setBalanceType } from "@/src/store/pagesSlice";
+import { setBalanceType, setGlobalLoading } from "@/src/store/pagesSlice";
 
 function Sort() {
   const router = useRouter();
@@ -19,10 +19,11 @@ function Sort() {
     if (e.currentTarget.hasAttribute("data-order")) {
       order = e.currentTarget.getAttribute("data-order") === "desc" ? "asc" : "desc";
     } else order = sortOrder.orderVal;
-    dispatch(setSortOrder({ sort, order }));
-    dispatch(copyState());
+    // dispatch(setSortOrder({ sort, order }));
+    // dispatch(copyState());
     if (sort === "locked_balance") dispatch(setBalanceType("locked"));
     else dispatch(setBalanceType("usd"));
+    dispatch(setGlobalLoading(true));
     router.push(`/pages/1?&sort=${sort}&order=${order}${queriesWithoutSort}`);
   };
   return (
