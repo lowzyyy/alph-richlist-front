@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 // store
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { setShowModal } from "@/src/store/filterModalSlice";
-import { copyState } from "@/src/store/urlQueriesCopy";
+import { copyState, getCopyQuery } from "@/src/store/urlQueriesCopy";
 import { getQuery, loadSavedQueries } from "@/src/store/urlQueriesSlice";
 // components
 import GenesisFilter from "./GenesisFilter";
@@ -24,6 +24,7 @@ function FilterModal() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const combinedQuery = useAppSelector(getQuery);
+  const combinedQueryCopy = useAppSelector(getCopyQuery);
   // const allQueries = useAppSelector((state) => state.urlQueries);
   // const copy = useAppSelector((state) => state.urlQueriesCopy);
   // console.log("all: ", allQueries);
@@ -44,9 +45,12 @@ function FilterModal() {
 
   const onApply = () => {
     dispatch(setShowModal());
-    dispatch(setGlobalLoading(true));
     resetBodySettings();
-    router.push(`/pages/1?${combinedQuery}`);
+    if (combinedQuery === combinedQueryCopy) return;
+    else {
+      dispatch(setGlobalLoading(true));
+      router.push(`/pages/1?${combinedQuery}`);
+    }
   };
   return (
     <div
