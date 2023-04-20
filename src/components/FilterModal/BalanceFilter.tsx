@@ -86,7 +86,7 @@ function BalanceFilter() {
           onChange={onInputLeft}
           maxLength={8}
           className={`w-24 rounded-md border p-1 text-center outline-none  ${
-            testL ? "border-red-600" : ""
+            testL ? "border-red-600" : "border-slate-800"
           }`}
           value={left}
         />
@@ -95,7 +95,7 @@ function BalanceFilter() {
           onChange={onInputRight}
           maxLength={8}
           className={`w-24 rounded-md border p-1 text-center outline-none ${
-            testR ? "border-red-600" : ""
+            testR ? "border-red-600" : "border-slate-800"
           }`}
           value={right}
         />

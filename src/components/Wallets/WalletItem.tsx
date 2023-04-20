@@ -1,7 +1,7 @@
 import React from "react";
 import { Roboto_Mono } from "next/font/google";
 import Link from "next/link";
-
+import { Tooltip } from "react-tooltip";
 // globals
 import {
   ALEPHIUM_EXPLORER,
@@ -52,6 +52,16 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
       : isItReserved
       ? "Reserved"
       : null;
+  const fullTagName = tagName;
+  tagName =
+    window.innerWidth < 400
+      ? tagName
+        ? tagName.length > 20
+          ? tagName.slice(0, 18) + ".."
+          : tagName
+        : null
+      : tagName;
+
   tagName = tagName ? tagName[0].toUpperCase() + tagName.slice(1) : null;
   let tagType = "Other";
   if (w.type) tagType = w.type;
@@ -59,10 +69,13 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
   else if (tagName === "Reserved") tagType = "Reserved";
   const tag = tagName && (
     <span
+      data-tooltip-id="tag"
+      data-tooltip-content={`${fullTagName}`}
       className={` rounded-md p-1  text-xs text-black xl:text-sm  ${
         tagColor[tagType as keyof typeof tagColor] ?? "bg-blue-400"
       }`}
     >
+      <Tooltip id="tag" openOnClick={window.innerWidth < 1280 ? true : false} />
       {tagName}
     </span>
   );
