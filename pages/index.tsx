@@ -14,8 +14,6 @@ type Props = {
   url: string;
 };
 
-// TODO:
-// make filter modal prettier
 export default function Home({ url }: Props) {
   const router = useRouter();
   const dispatch = useAppDispatch();

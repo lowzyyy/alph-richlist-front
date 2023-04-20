@@ -1,15 +1,19 @@
-import { Roboto } from "next/font/google";
 import React, { ReactNode } from "react";
-import alphLogo from "../../../public/alph_logo.png";
-import { useAppSelector } from "@/src/store/storeHooks";
-import FilterModal from "../FilterModal/FilterModal";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import { Roboto } from "next/font/google";
+import alphLogo from "../../../public/alph_logo.png";
+import { GithubLogo } from "@phosphor-icons/react";
+// components
+import FilterModal from "../FilterModal/FilterModal";
+// store
+import { useAppSelector } from "@/src/store/storeHooks";
 const rob = Roboto({
   subsets: ["latin"],
   variable: "--font-roboto",
   weight: ["100", "300", "400", "500", "700", "900"],
 });
+const donationAddress = "12J8rmA29dRs9bEk266KABj5ybP3kqxG9me5hzUKgkGk5";
 function Layout(props: { children: ReactNode }) {
   const showFilter = useAppSelector((state) => state.filterModal.showFilter);
   const router = useRouter();
@@ -29,12 +33,34 @@ function Layout(props: { children: ReactNode }) {
         </div>
       </header>
       <main
-        className={`relative mx-auto max-w-[95%]  font-roboto xl:max-w-[80%] 2xl:max-w-[70%]`}
+        className={`relative mx-auto mb-4  max-w-[95%] font-roboto xl:max-w-[80%] 2xl:max-w-[70%]`}
       >
         {showFilter && <FilterModal />}
 
         {props.children}
       </main>
+      <footer className=" w-full  bg-slate-200 text-sm font-semibold xs:text-sm  sm:text-base">
+        <div className="mx-auto flex w-[95%] flex-col gap-1 p-2 pb-4 xs:gap-2 xl:max-w-[80%] 2xl:w-[70%]">
+          <span className="flex items-center justify-between">
+            Feel free to donate :)
+            {
+              <span className="flex items-center gap-1">
+                Made by{" "}
+                <Link
+                  href={"https://github.com/lowzyyy"}
+                  className="cursor-pointer rounded-lg bg-slate-300 p-1"
+                >
+                  <GithubLogo size={20} weight="fill" className="text-indigo-500" />
+                </Link>
+              </span>
+            }
+          </span>
+          <span className="break-words text-xs xs:text-sm sm:text-base">
+            ALPH address: <br className="sm:hidden"></br>
+            {`${donationAddress}`}
+          </span>
+        </div>
+      </footer>
     </div>
   );
 }

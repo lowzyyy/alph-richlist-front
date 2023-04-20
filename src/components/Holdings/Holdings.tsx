@@ -55,7 +55,7 @@ function Holdings({ HOLDINGS_API }: Props) {
       </p>
       <Bar className="mb-4" data={data} options={options}></Bar>
       <p className="text-xs text-gray-500 xs:text-sm">
-        *include/exclude Genesis, Exchanges, Pools addresses
+        *include/exclude Genesis, Exchange, Pool addresses
       </p>
     </div>
   );
