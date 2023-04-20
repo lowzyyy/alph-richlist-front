@@ -67,7 +67,7 @@ function Navigation({ pageNumber }: Props) {
           >
             <CaretCircleDoubleLeft
               size={32}
-              className="[&>circle]:transition-all  [&>circle]:hover:fill-gray-200 [&>circle]:hover:stroke-[20] [&>polyline]:hover:stroke-[20]"
+              className="transition-all hover:text-indigo-800"
             />
           </span>
           <span
@@ -76,10 +76,7 @@ function Navigation({ pageNumber }: Props) {
             onClick={pageCallback}
             data-dir={NavDir.backward}
           >
-            <CaretCircleLeft
-              size={32}
-              className="[&>circle]:transition-all  [&>circle]:hover:fill-gray-200 [&>circle]:hover:stroke-[20] [&>polyline]:hover:stroke-[20]"
-            />
+            <CaretCircleLeft size={32} className="transition-all hover:text-indigo-800" />
           </span>
         </div>
 
@@ -97,7 +94,7 @@ function Navigation({ pageNumber }: Props) {
           >
             <CaretCircleRight
               size={32}
-              className="[&>circle]:transition-all  [&>circle]:hover:fill-gray-200 [&>circle]:hover:stroke-[20] [&>polyline]:hover:stroke-[20]"
+              className="transition-all hover:text-indigo-800"
             />
           </span>
           <span
@@ -108,7 +105,7 @@ function Navigation({ pageNumber }: Props) {
           >
             <CaretCircleDoubleRight
               size={32}
-              className="[&>circle]:transition-all  [&>circle]:hover:fill-gray-200 [&>circle]:hover:stroke-[20] [&>polyline]:hover:stroke-[20]"
+              className="transition-all hover:text-indigo-800"
             />
           </span>
         </div>

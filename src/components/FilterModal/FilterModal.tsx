@@ -66,13 +66,13 @@ function FilterModal() {
         <div className="flex justify-between">
           <button
             onClick={onClose}
-            className="rounded-md border border-black py-1 px-3 text-lg"
+            className="rounded-md border border-black py-1 px-3 text-lg transition-all hover:border-indigo-500 hover:bg-indigo-500 hover:text-white"
           >
             Close
           </button>
           <button
             onClick={onApply}
-            className="rounded-md border border-black py-1 px-3 text-base"
+            className="rounded-md border border-black py-1 px-3 text-base transition-all hover:border-indigo-500 hover:bg-indigo-500 hover:text-white"
           >
             Apply
           </button>
