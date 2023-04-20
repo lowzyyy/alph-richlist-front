@@ -14,7 +14,9 @@ function Filter() {
   const onReset = () => {
     dispatch(resetBalanceType());
     dispatch(setGlobalLoading(true));
-    router.push(`/pages/1`);
+    router.asPath === "/" || router.asPath === "/pages/1"
+      ? router.reload()
+      : router.push("/pages/1");
   };
 
   const onFilter = () => {
