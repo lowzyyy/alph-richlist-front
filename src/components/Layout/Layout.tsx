@@ -65,7 +65,7 @@ function Layout(props: { children: ReactNode }) {
               {theme === "white" ? (
                 <Sun size={30} className="text-zinc-950" weight="duotone" />
               ) : (
-                <Moon size={30} className="text-yellow-500" weight="fill" />
+                <Moon size={30} className="text-yellow-600" weight="fill" />
               )}
             </div>
           </div>
