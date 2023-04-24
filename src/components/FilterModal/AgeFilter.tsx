@@ -56,15 +56,15 @@ function AgeFilter() {
 
   const ageLessBox =
     age.ageVal.startsWith("<=") && age.checked ? (
-      <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
+      <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor} `} />
     ) : (
-      <Square size={filterCbSize} />
+      <Square size={filterCbSize} className="dark:text-[--cb-dark] " />
     );
   const ageGreaterBox =
     age.ageVal.startsWith(">=") && age.checked ? (
       <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
     ) : (
-      <Square size={filterCbSize} />
+      <Square size={filterCbSize} className="dark:text-[--cb-dark]" />
     );
 
   const vLess = lessRef.current
@@ -80,7 +80,7 @@ function AgeFilter() {
   return (
     <div className="p-1">
       <span>
-        <span onClick={onAge} className="flex" id="<=">
+        <span onClick={onAge} className="flex " id="<=">
           {ageLessBox} Age &#8804; {intervals[vLess]}
         </span>
         <input
@@ -89,13 +89,13 @@ function AgeFilter() {
           type="range"
           min="0"
           max="4"
-          className={`${filterSliderWidth}`}
+          className={`${filterSliderWidth} dark:accent-indigo-800`}
           id="less"
           value={vLess}
         />
       </span>
       <span>
-        <span onClick={onAge} className="flex" id=">=">
+        <span onClick={onAge} className="flex " id=">=">
           {ageGreaterBox} Age &#8805; {intervals[vGreater]}
         </span>
         <input
@@ -104,7 +104,7 @@ function AgeFilter() {
           type="range"
           min="0"
           max="4"
-          className={`${filterSliderWidth}`}
+          className={`${filterSliderWidth} dark:accent-indigo-800`}
           id="greater"
           value={vGreater}
         />

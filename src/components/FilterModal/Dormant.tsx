@@ -12,7 +12,7 @@ function Dormant() {
   const checkbox = dormant.checked ? (
     <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
   ) : (
-    <Square size={filterCbSize} />
+    <Square size={filterCbSize} className="dark:text-[--cb-dark]" />
   );
   const onDormant = () => {
     dispatch(setDormant({ dormant: intervals[vDormant], checked: !dormant.checked }));
@@ -33,7 +33,7 @@ function Dormant() {
       </span>
       <input
         onChange={onSlider}
-        className={`${filterSliderWidth}`}
+        className={`${filterSliderWidth} dark:accent-indigo-800`}
         type="range"
         min={0}
         max={2}

@@ -27,7 +27,7 @@ function Sort() {
     router.push(`/pages/1?&sort=${sort}&order=${order}${queriesWithoutSort}`);
   };
   return (
-    <div className="flex items-center  rounded-md bg-slate-200 px-3  py-1 ">
+    <div className="flex items-center  rounded-md bg-slate-200 px-3 py-1  dark:bg-slate-800 ">
       <select
         id="sort"
         onChange={onSelect}

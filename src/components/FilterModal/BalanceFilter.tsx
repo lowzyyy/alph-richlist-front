@@ -15,7 +15,7 @@ function BalanceFilter() {
   const checkBox = balance.checked ? (
     <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
   ) : (
-    <Square size={filterCbSize} />
+    <Square size={filterCbSize} className="dark:text-[--cb-dark]" />
   );
   // callbacks
   const onBalance = () => {
@@ -78,14 +78,14 @@ function BalanceFilter() {
   const testR = isValid(right);
   return (
     <div className=" p-1">
-      <span onClick={onBalance} className="mb-1 flex">
+      <span onClick={onBalance} className="mb-1 flex ">
         {checkBox} Balance
       </span>
       <div className="flex items-center gap-2 ">
         <input
           onChange={onInputLeft}
           maxLength={8}
-          className={`w-24 rounded-md border p-1 text-center outline-none  ${
+          className={`w-24 rounded-md border p-1 text-center outline-none dark:bg-gray-400 dark:text-black ${
             testL ? "border-red-600" : "border-slate-800"
           }`}
           value={left}
@@ -94,7 +94,7 @@ function BalanceFilter() {
         <input
           onChange={onInputRight}
           maxLength={8}
-          className={`w-24 rounded-md border p-1 text-center outline-none ${
+          className={`w-24 rounded-md border p-1 text-center outline-none dark:bg-gray-400 dark:text-black ${
             testR ? "border-red-600" : "border-slate-800"
           }`}
           value={right}

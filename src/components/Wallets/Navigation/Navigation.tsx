@@ -61,7 +61,7 @@ function Navigation({ pageNumber }: Props) {
           <span
             role={"button"}
             aria-disabled={pageNumber === pageStart ? true : false}
-            className={`hover:cursor-pointer aria-disabled:pointer-events-none aria-disabled:text-gray-300  aria-disabled:hover:cursor-default`}
+            className={`hover:cursor-pointer aria-disabled:pointer-events-none aria-disabled:text-gray-300 aria-disabled:hover:cursor-default  dark:aria-disabled:text-gray-700`}
             onClick={pageCallback}
             data-dir={NavDir.start}
           >
@@ -72,7 +72,7 @@ function Navigation({ pageNumber }: Props) {
           </span>
           <span
             aria-disabled={pageNumber === pageStart ? true : false}
-            className={`hover:cursor-pointer aria-disabled:pointer-events-none aria-disabled:text-gray-300  aria-disabled:hover:cursor-default`}
+            className={`hover:cursor-pointer aria-disabled:pointer-events-none aria-disabled:text-gray-300  aria-disabled:hover:cursor-default dark:aria-disabled:text-gray-700`}
             onClick={pageCallback}
             data-dir={NavDir.backward}
           >
@@ -91,7 +91,7 @@ function Navigation({ pageNumber }: Props) {
         <div className="flex gap-4">
           <span
             aria-disabled={pageNumber === pageEnd ? true : false}
-            className={`hover:cursor-pointer aria-disabled:pointer-events-none aria-disabled:text-gray-300  aria-disabled:hover:cursor-default`}
+            className={`hover:cursor-pointer aria-disabled:pointer-events-none aria-disabled:text-gray-300  aria-disabled:hover:cursor-default dark:aria-disabled:text-gray-700`}
             onClick={pageCallback}
             data-dir={NavDir.forward}
           >
@@ -102,7 +102,7 @@ function Navigation({ pageNumber }: Props) {
           </span>
           <span
             aria-disabled={pageNumber === pageEnd ? true : false}
-            className={`hover:cursor-pointer aria-disabled:pointer-events-none aria-disabled:text-gray-300  aria-disabled:hover:cursor-default`}
+            className={`hover:cursor-pointer aria-disabled:pointer-events-none aria-disabled:text-gray-300  aria-disabled:hover:cursor-default dark:aria-disabled:text-gray-700`}
             onClick={pageCallback}
             data-dir={NavDir.end}
           >

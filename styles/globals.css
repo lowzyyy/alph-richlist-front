@@ -3,14 +3,22 @@
 @tailwind utilities;
 
 :root {
-  --body-default-bg: #f5f5f4;
-  --body-filter-bg: #e2e8f0;
+  /* body */
+  --body-bg-default-white: theme(colors.stone.100);
+  --body-filter-bg-white: theme(colors.slate.200);
+  --body-bg-default-dark: theme(colors.stone.950);
+  --body-filter-bg-dark: theme(colors.gray.900);
+  /* text */
+  --text-dark-dark-: theme(colors.gray.400);
+  --text-dark-lighter: theme(colors.gray.300);
+  /* textbox */
+  --cb-dark: theme(colors.gray.400);
   --rt-opacity: 0.95;
 }
 
 @layer base {
   body {
-    @apply bg-stone-100;
+    @apply dark:bg-stone-950 bg-stone-100;
     /* @apply text-black */
     @apply mr-[calc(-1*(100vw-100%))];
     @apply overflow-x-hidden;

@@ -9,6 +9,7 @@ import { copyState } from "@/src/store/urlQueriesCopy";
 // components
 import Wallets from "../src/components/Wallets/Wallets";
 import Holdings from "@/src/components/Holdings/Holdings";
+import { setTheme } from "@/src/store/pagesSlice";
 
 type Props = {
   url: string;
@@ -19,6 +20,7 @@ export default function Home({ url }: Props) {
   const dispatch = useAppDispatch();
   const globalLoading = useAppSelector((state) => state.pages.globalLoading);
   const { sort, order, filter, age, balance, zeroOuts, dormant } = router.query;
+  // set query parameters on redux
   useEffect(() => {
     dispatch(
       setAllQueriesURL({
@@ -33,6 +35,17 @@ export default function Home({ url }: Props) {
     dispatch(copyState());
   }, [router.query]);
 
+  // set dark mode on load
+  useEffect(() => {
+    const theme = localStorage.getItem("AlphRichlistTheme") as "white" | "dark" | null;
+    if (!theme) localStorage.setItem("AlphRichlistTheme", "white");
+    else {
+      theme === "white"
+        ? document.querySelector("html")!.classList.remove("dark")
+        : document.querySelector("html")!.classList.add("dark");
+      dispatch(setTheme(theme));
+    }
+  }, []);
   return (
     <>
       <Head>

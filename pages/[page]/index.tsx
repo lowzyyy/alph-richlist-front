@@ -7,6 +7,7 @@ import { setAllQueriesURL } from "@/src/store/urlQueriesSlice";
 // components
 import Wallets from "@/src/components/Wallets/Wallets";
 import { copyState } from "@/src/store/urlQueriesCopy";
+import { setTheme } from "@/src/store/pagesSlice";
 
 type Props = {
   url: string;
@@ -30,6 +31,18 @@ function Page({ url }: Props) {
     );
     dispatch(copyState());
   }, [router.query]);
+
+  // set dark mode on load
+  useEffect(() => {
+    const theme = localStorage.getItem("AlphRichlistTheme") as "white" | "dark" | null;
+    if (!theme) localStorage.setItem("AlphRichlistTheme", "white");
+    else {
+      theme === "white"
+        ? document.querySelector("html")!.classList.remove("dark")
+        : document.querySelector("html")!.classList.add("dark");
+      dispatch(setTheme(theme));
+    }
+  }, []);
 
   const title = `Alph rich list page ${page}`;
   const pageNumber = +(page as string);

@@ -1,4 +1,4 @@
-import type { ChartOptions, ChartData } from "chart.js";
+import type { ChartOptions } from "chart.js";
 
 export const labels = [
   "1-1000",
@@ -12,31 +12,3 @@ export const labels = [
 ];
 
 const ticksColor = "#334155";
-export const options: ChartOptions<"bar"> = {
-  responsive: true,
-  plugins: {
-    tooltip: {
-      callbacks: {
-        label: (toolTipItem) => {
-          return "Number of wallets: " + toolTipItem.formattedValue;
-        },
-        afterTitle: (toolTipItems) => {
-          return toolTipItems[0].datasetIndex === 0 ? "w/ Genesis" : "w/o Genesis";
-        },
-      },
-    },
-  },
-  scales: {
-    y: {
-      type: "logarithmic",
-      ticks: {
-        color: ticksColor,
-      },
-    },
-    x: {
-      ticks: {
-        color: ticksColor,
-      },
-    },
-  },
-};

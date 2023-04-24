@@ -101,7 +101,7 @@ function Wallets({ pageNum, STATS_API }: Props) {
       <Navigation pageNumber={pageNum} />
 
       <div className="mb-2 mt-3 sm:flex sm:justify-between">
-        <p className=" text-xs text-slate-800 xs:text-sm">
+        <p className=" text-xs text-slate-800 dark:text-inherit xs:text-sm">
           Powered by{" "}
           <a
             className="font-semibold text-cyan-600"
@@ -110,7 +110,9 @@ function Wallets({ pageNum, STATS_API }: Props) {
             CoinGecko API
           </a>
         </p>
-        <p className=" text-xs text-slate-800 xs:text-sm">Updated: {data?.last_update}</p>
+        <p className=" text-xs text-slate-800 dark:text-inherit xs:text-sm">
+          Updated: {data?.last_update}
+        </p>
       </div>
     </div>
   );

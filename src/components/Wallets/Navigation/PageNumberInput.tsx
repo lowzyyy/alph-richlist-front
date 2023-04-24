@@ -43,7 +43,7 @@ function PageNumberInput({ pageNumber, maxPage }: Props) {
         maxLength={3}
         ref={inputRef}
         onChange={inputChange}
-        className={`w-9 rounded-md border-2 text-center focus:outline-none ${
+        className={`w-9 rounded-md border-2 text-center focus:outline-none dark:bg-gray-600 dark:text-white ${
           validInput ? "border-black" : "border-red-500"
         }`}
         value={pageNum}

@@ -4,12 +4,14 @@ interface page {
   pageEnd: number | null;
   balanceType: "usd" | "locked";
   globalLoading: boolean;
+  theme: "white" | "dark";
 }
 
 const initialState: page = {
   pageEnd: null,
   balanceType: "usd",
   globalLoading: false,
+  theme: "white",
 };
 
 export const pagesSlice = createSlice({
@@ -28,10 +30,18 @@ export const pagesSlice = createSlice({
     setGlobalLoading: (state, action: PayloadAction<boolean>) => {
       state.globalLoading = action.payload;
     },
+    setTheme: (state, action: PayloadAction<"white" | "dark">) => {
+      state.theme = action.payload;
+    },
   },
 });
 
-export const { setPageEnd, setBalanceType, resetBalanceType, setGlobalLoading } =
-  pagesSlice.actions;
+export const {
+  setPageEnd,
+  setBalanceType,
+  resetBalanceType,
+  setGlobalLoading,
+  setTheme,
+} = pagesSlice.actions;
 
 export default pagesSlice.reducer;

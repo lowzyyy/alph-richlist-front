@@ -8,7 +8,7 @@ type Props = {
 };
 function WalletsList({ wallets, walletLen, alphPrice, pageNumber }: Props) {
   return (
-    <div className="border border-black rounded-md ">
+    <div className="rounded-md border border-black  ">
       {wallets.map((w, i) => {
         return (
           <WalletItem

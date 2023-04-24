@@ -18,13 +18,13 @@ function GenesisFilter() {
     genesis.filterVal === "justgenesis" ? (
       <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
     ) : (
-      <Square size={filterCbSize} />
+      <Square size={filterCbSize} className="dark:text-[--cb-dark]" />
     );
   const allBox =
     genesis.filterVal === "all" ? (
       <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
     ) : (
-      <Square size={filterCbSize} />
+      <Square size={filterCbSize} className="dark:text-[--cb-dark]" />
     );
 
   return (

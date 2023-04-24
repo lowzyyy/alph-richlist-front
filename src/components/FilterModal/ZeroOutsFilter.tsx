@@ -14,7 +14,7 @@ function ZeroOutsFilter() {
   const checkBox = zeroOuts.checked ? (
     <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
   ) : (
-    <Square size={filterCbSize} />
+    <Square size={filterCbSize} className="dark:text-[--cb-dark]" />
   );
   return (
     <div onClick={onZero} className="flex  p-1">
