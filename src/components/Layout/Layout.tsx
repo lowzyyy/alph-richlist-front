@@ -80,7 +80,7 @@ function Layout(props: { children: ReactNode }) {
           {props.children}
         </main>
       </div>
-      <footer className=" dark:bg-sky-950  w-full bg-slate-200 text-sm font-semibold  dark:text-[--text-dark-lighter] xs:text-sm sm:text-base">
+      <footer className=" w-full  bg-slate-200 text-sm font-semibold dark:bg-slate-900  dark:text-[--text-dark-lighter] xs:text-sm sm:text-base">
         <div className="mx-auto flex w-[95%] flex-col gap-1 p-2 pb-4 xs:gap-2 xl:max-w-[80%] 2xl:w-[70%]">
           <span className="flex items-center justify-between">
             Feel free to donate :)
