@@ -123,7 +123,7 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
             <Link
               href={`${ALEPHIUM_EXPLORER}/addresses/${w.address}`}
               target="_blank"
-              className={`text-blue-700 hover:text-blue-500 dark:text-yellow-600 dark:hover:text-yellow-500 `}
+              className={`text-blue-700 hover:text-blue-500 dark:text-yellow-700 dark:hover:text-yellow-500 `}
               style={{ fontFamily: `${robMono.style.fontFamily}` }}
             >
               {addressShort}

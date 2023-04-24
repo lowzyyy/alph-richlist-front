@@ -36,7 +36,10 @@ function Holdings({ HOLDINGS_API }: Props) {
   let holdings = holdingsData ? holdingsData : [null, null];
 
   const ticksColor = theme === "white" ? "#334155" : "#d1d5db";
-  const gridColor = theme === "white" ? "#d1d5db" : "#262626";
+  const gridColor = theme === "white" ? "#d1d5db" : "#404040";
+  const genesisColor = theme === "white" ? "#a5b4fc" : "#6366f1";
+  const noGenesisColor = theme === "white" ? "#60a5fa" : "#3b82f6";
+
   const options: ChartOptions<"bar"> = {
     responsive: true,
     plugins: {
@@ -83,12 +86,12 @@ function Holdings({ HOLDINGS_API }: Props) {
       {
         label: "Include Genesis*",
         data: Object.values(holdings[0] ?? []),
-        backgroundColor: "#a5b4fc",
+        backgroundColor: genesisColor,
       },
       {
         label: "Exclude Genesis*",
         data: Object.values(holdings[1] ?? []),
-        backgroundColor: "#60a5fa",
+        backgroundColor: noGenesisColor,
       },
     ],
   };

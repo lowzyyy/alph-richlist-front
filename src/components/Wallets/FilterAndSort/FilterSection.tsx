@@ -27,7 +27,7 @@ function Filter() {
     dispatch(setShowModal());
   };
   return (
-    <div className="flex items-center gap-6  rounded-md bg-slate-200 px-3 py-1 dark:bg-slate-800">
+    <div className="flex items-center gap-6  rounded-md bg-slate-200 px-3 py-1 dark:bg-gray-900">
       <div onClick={onFilter} className="flex cursor-pointer items-center">
         <FadersHorizontal weight="bold"></FadersHorizontal>
         <span className="text-sm">Filters</span>

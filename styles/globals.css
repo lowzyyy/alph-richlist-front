@@ -6,7 +6,7 @@
   /* body */
   --body-bg-default-white: theme(colors.stone.100);
   --body-filter-bg-white: theme(colors.slate.200);
-  --body-bg-default-dark: theme(colors.stone.950);
+  --body-bg-default-dark: rgb(24, 33, 48);
   --body-filter-bg-dark: theme(colors.gray.900);
   /* text */
   --text-dark-dark-: theme(colors.gray.400);
@@ -18,7 +18,7 @@
 
 @layer base {
   body {
-    @apply dark:bg-stone-950 bg-stone-100;
+    @apply bg-stone-100  dark:bg-[#182130];
     /* @apply text-black */
     @apply mr-[calc(-1*(100vw-100%))];
     @apply overflow-x-hidden;
