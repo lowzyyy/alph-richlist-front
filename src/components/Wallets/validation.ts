@@ -75,19 +75,20 @@ const orderBounds = (x1: string, x2: string, lMulti?: string, rMulti?: string) =
 
 const getMultiplier = (m: string) => (m === "k" ? 1000 : 1_000_000);
 
+export const normalBalance = /^(?<Normal>\d+(?:\.\d+)?$)/;
+export const shortBalance = /^(?<Short>\d+(?:\.\d+)?)(?<Multi>k|m)$/;
+export const rangeBalance =
+  /^(?:(?<fNormal>\d+(?:\.\d+)?)|((?<fShort>\d+(?:\.\d+)?)(?<fMulti>k|m)))-((?<sNormal>\d+(?:\.\d+)?)|(?:(?<sShort>\d+(?:\.\d+)?)(?<sMulti>k|m)))$/;
+
 export const validateBalanceURL = (balanceQ: queryParam) => {
   const balance = takeFirst(balanceQ)?.toLocaleLowerCase();
-  const normal = /^(?<Normal>\d+$)/;
-  const short = /^(?<Short>\d+)(?<Multi>k|m)$/;
-  const range =
-    /^(?:(?<fNormal>\d+)|((?<fShort>\d+)(?<fMulti>k|m)))-((?<sNormal>\d+)|(?:(?<sShort>\d+)(?<sMulti>k|m)))$/;
   if (balance) {
     if (balance.startsWith(">=") || balance.startsWith("<=")) {
       const maybeNumber = balance.slice(2);
       const symbol = balance.slice(0, 2);
       const symbolId = symbol === "<=" ? true : false;
-      if (normal.test(maybeNumber)) {
-        const match: RegExpGroups<"Normal"> = normal.exec(maybeNumber)!;
+      if (normalBalance.test(maybeNumber)) {
+        const match: RegExpGroups<"Normal"> = normalBalance.exec(maybeNumber)!;
         const { Normal } = match.groups!;
         return {
           query: `&balance=${symbol}${Normal}`,
@@ -95,8 +96,8 @@ export const validateBalanceURL = (balanceQ: queryParam) => {
           balanceRightVal: `${symbolId ? `${Normal}` : ""}`,
         };
       }
-      if (short.test(maybeNumber)) {
-        const match: RegExpGroups<"Short" | "Multi"> = short.exec(maybeNumber)!;
+      if (shortBalance.test(maybeNumber)) {
+        const match: RegExpGroups<"Short" | "Multi"> = shortBalance.exec(maybeNumber)!;
         const { Short, Multi } = match.groups!;
         return {
           query: `&balance=${symbol}${Short}${Multi}`,
@@ -105,10 +106,10 @@ export const validateBalanceURL = (balanceQ: queryParam) => {
         };
       }
       return { query: "", balanceLeftVal: "", balanceRightVal: "" };
-    } else if (range.test(balance)) {
+    } else if (rangeBalance.test(balance)) {
       const match: RegExpGroups<
         "fNormal" | "fShort" | "fMulti" | "sNormal" | "sShort" | "sMulti"
-      > = range.exec(balance)!;
+      > = rangeBalance.exec(balance)!;
       const { fNormal, fShort, fMulti, sNormal, sShort, sMulti } = match.groups!;
       if (fNormal && sNormal) {
         const { l, r } = orderBounds(fNormal, sNormal);
@@ -151,11 +152,9 @@ export const validateBalanceClient = (leftQ: string, rightQ: string) => {
   const left = leftQ.trim().toLowerCase();
   const right = rightQ.trim().toLowerCase();
   const emptyBalance = { query: "", balanceLeftVal: "", balanceRightVal: "" };
-  const normal = /^(?<Normal>\d+$)/;
-  const short = /^(?<Short>\d+)(?<Multi>k|m)$/;
   if (!left && !right) return emptyBalance;
   if (left && !right) {
-    if (normal.test(left) || short.test(left))
+    if (normalBalance.test(left) || shortBalance.test(left))
       return {
         query: `&balance=>=${left}`,
         balanceLeftVal: `${left}`,
@@ -164,7 +163,7 @@ export const validateBalanceClient = (leftQ: string, rightQ: string) => {
     else return emptyBalance;
   }
   if (!left && right) {
-    if (normal.test(right) || short.test(right))
+    if (normalBalance.test(right) || shortBalance.test(right))
       return {
         query: `&balance=<=${right}`,
         balanceLeftVal: "",
@@ -173,8 +172,8 @@ export const validateBalanceClient = (leftQ: string, rightQ: string) => {
     else return emptyBalance;
   }
   if (left && right) {
-    const leftTest = normal.test(left) || short.test(left);
-    const righTest = normal.test(right) || short.test(right);
+    const leftTest = normalBalance.test(left) || shortBalance.test(left);
+    const righTest = normalBalance.test(right) || shortBalance.test(right);
     if (leftTest && righTest)
       return {
         query: `&balance=${left}-${right}`,

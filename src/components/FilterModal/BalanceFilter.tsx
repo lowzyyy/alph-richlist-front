@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { setBalance } from "@/src/store/urlQueriesSlice";
 import { CheckSquare, Square } from "@phosphor-icons/react";
 import React, { useEffect, useState } from "react";
+import { normalBalance, shortBalance } from "../Wallets/validation";
 
 const inputTime = 300;
 function BalanceFilter() {
@@ -10,7 +11,7 @@ function BalanceFilter() {
   const balance = useAppSelector((state) => state.urlQueries.balance);
   const [left, setLeft] = useState<string>(balance.balanceLeftVal);
   const [right, setRight] = useState<string>(balance.balanceRightVal);
-  // console.log("Balance: ", balance, left, right);
+  console.log("Balance: ", balance, left, right);
 
   const checkBox = balance.checked ? (
     <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
@@ -110,9 +111,7 @@ function BalanceFilter() {
 }
 
 const isValid = (valueBalance: string) => {
-  const normal = /^(?<Normal>\d+$)/i;
-  const short = /^(?<Short>\d+)(?<Multi>k|m)$/i;
-  return normal.test(valueBalance) || short.test(valueBalance);
+  return normalBalance.test(valueBalance) || shortBalance.test(valueBalance);
 };
 
 export default BalanceFilter;
