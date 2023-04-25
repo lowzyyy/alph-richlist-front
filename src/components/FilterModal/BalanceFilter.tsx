@@ -74,8 +74,8 @@ function BalanceFilter() {
     return () => clearTimeout(timeout);
   }, [right]);
 
-  const testL = isValid(left);
-  const testR = isValid(right);
+  const testL = !(!isValid(left) && balance.checked);
+  const testR = !(!isValid(right) && balance.checked);
   return (
     <div className=" p-1">
       <span onClick={onBalance} className="mb-1 flex ">
@@ -85,21 +85,26 @@ function BalanceFilter() {
         <input
           onChange={onInputLeft}
           maxLength={8}
-          className={`w-24 rounded-md border p-1 text-center outline-none dark:bg-gray-400 dark:text-black ${
-            testL ? "border-red-600" : "border-slate-800"
+          className={`w-24  rounded-md border p-1 text-center outline-none placeholder:text-gray-300 dark:bg-gray-400 dark:text-black dark:placeholder:text-slate-500 ${
+            testL ? "border-slate-800" : "border-red-600"
           }`}
           value={left}
+          placeholder="100k"
         />
         -
         <input
           onChange={onInputRight}
           maxLength={8}
-          className={`w-24 rounded-md border p-1 text-center outline-none dark:bg-gray-400 dark:text-black ${
-            testR ? "border-red-600" : "border-slate-800"
+          className={`w-24 rounded-md border p-1 text-center outline-none placeholder:text-gray-300 dark:bg-gray-400 dark:text-black dark:placeholder:text-slate-500 ${
+            testR ? "border-slate-800" : "border-red-600"
           }`}
           value={right}
+          placeholder="5M"
         />
       </div>
+      <span className="text-xs dark:text-stone-300">
+        Tip: you can type "k" or "m" for thousand or million
+      </span>
     </div>
   );
 }
@@ -107,7 +112,7 @@ function BalanceFilter() {
 const isValid = (valueBalance: string) => {
   const normal = /^(?<Normal>\d+$)/i;
   const short = /^(?<Short>\d+)(?<Multi>k|m)$/i;
-  return !(normal.test(valueBalance) || short.test(valueBalance));
+  return normal.test(valueBalance) || short.test(valueBalance);
 };
 
 export default BalanceFilter;

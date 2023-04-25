@@ -62,7 +62,7 @@ function FilterModal() {
       <div
         className={`mx-auto flex h-[450px]
         w-[95%] animate-slideFromLeft1 flex-col justify-between rounded-md bg-indigo-50 p-3 shadow-[0_0px_20px_8px_rgba(0,0,0,0.75)] 
-        dark:border  dark:border-stone-600 dark:bg-stone-900 dark:shadow-none
+        dark:border  dark:border-stone-600 dark:bg-stone-900 dark:shadow-neutral-900
           xs:w-[400px] xs:animate-slideFromLeft2 md:animate-slideFromLeft3 md:p-4`}
       >
         <div className="flex flex-col gap-1">

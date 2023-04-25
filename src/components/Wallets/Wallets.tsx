@@ -79,6 +79,7 @@ function Wallets({ pageNum, STATS_API }: Props) {
 
   if (isLoading || isLoadingPrice) return <WalletsSkeleton />;
   if (!isLoading && !isLoadingPrice && globalLoading) return <WalletsSkeleton />;
+
   if (errorAddresses) return <p>Error loading addresses</p>;
   return (
     <div>

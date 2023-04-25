@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import {
   Chart as ChartJS,
@@ -23,6 +23,7 @@ type Props = {
 };
 
 function Holdings({ HOLDINGS_API }: Props) {
+  const [shouldMaintainAspect, setShouldMaintainAspect] = useState(true);
   const theme = useAppSelector((state) => state.pages.theme);
   const {
     data: holdingsData,
@@ -40,7 +41,17 @@ function Holdings({ HOLDINGS_API }: Props) {
   const genesisColor = theme === "white" ? "#a5b4fc" : "#6366f1";
   const noGenesisColor = theme === "white" ? "#60a5fa" : "#3b82f6";
 
+  const onResizeChart = () => {
+    setShouldMaintainAspect(window.innerWidth < 450 ? false : true);
+  };
+  useEffect(() => {
+    setShouldMaintainAspect(window.innerWidth < 450 ? false : true);
+    window.addEventListener("resize", onResizeChart);
+    return document.removeEventListener("resize", onResizeChart);
+  }, []);
+
   const options: ChartOptions<"bar"> = {
+    maintainAspectRatio: shouldMaintainAspect,
     responsive: true,
     plugins: {
       legend: {
@@ -97,11 +108,13 @@ function Holdings({ HOLDINGS_API }: Props) {
   };
   if (error) return <p>Error loading wallet holdings graph</p>;
   return (
-    <div className="mx-auto mb-6 md:w-[80%] xl:w-[60%]">
+    <div className="mx-auto mb-6 md:w-[80%] xl:w-[55%]">
       <p className="mb-1 text-center text-xs font-medium text-gray-600 dark:text-inherit xs:text-sm lg:text-base lg:font-medium">
         Number of wallets per amount
       </p>
-      <Bar className="mb-4" data={data} options={options}></Bar>
+      <div className="mb-4 h-52 xs:h-auto xs:w-full">
+        <Bar className="" data={data} options={options}></Bar>
+      </div>
       <p className="text-xs text-gray-500 dark:text-gray-400 xs:text-sm">
         *include/exclude Genesis, Exchange, Pool addresses
       </p>
