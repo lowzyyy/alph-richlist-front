@@ -103,7 +103,7 @@ function BalanceFilter() {
         />
       </div>
       <span className="text-xs dark:text-stone-300">
-        Tip: you can type "k" or "m" for thousand or million
+        Tip: you can type &quot;k&quot; or &quot;m&quot; for thousand or million
       </span>
     </div>
   );
