@@ -116,14 +116,14 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
     <div
       className={`border-b  border-black bg-stone-50 p-1 text-sm first:rounded-t-md last:rounded-b-md last:border-b-0 dark:bg-gray-900 xs:flex xs:justify-between xs:p-2 lg:text-base xl:p-4`}
     >
-      <div className="flex flex-col gap-2 xs:w-full sm:w-auto">
+      <div className="flex flex-col gap-3 xs:w-full xs:gap-2 sm:w-auto">
         <span className={`flex justify-between sm:gap-1`}>
           <span className={`flex gap-2 `}>
             <span className="font-semibold">{walletNumber}</span>
             <Link
               href={`${ALEPHIUM_EXPLORER}/addresses/${w.address}`}
               target="_blank"
-              className={`text-blue-700 hover:text-blue-500 dark:text-yellow-700 dark:hover:text-yellow-500 `}
+              className={`text-blue-700 hover:text-blue-500 dark:text-amber-600 dark:hover:text-yellow-500 `}
               style={{ fontFamily: `${robMono.style.fontFamily}` }}
             >
               {addressShort}
