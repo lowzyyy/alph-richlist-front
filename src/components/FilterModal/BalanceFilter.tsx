@@ -11,7 +11,7 @@ function BalanceFilter() {
   const balance = useAppSelector((state) => state.urlQueries.balance);
   const [left, setLeft] = useState<string>(balance.balanceLeftVal);
   const [right, setRight] = useState<string>(balance.balanceRightVal);
-  console.log("Balance: ", balance, left, right);
+  // console.log("Balance: ", balance, left, right);
 
   const checkBox = balance.checked ? (
     <CheckSquare size={filterCbSize} weight="fill" className={`${filterCbColor}`} />
