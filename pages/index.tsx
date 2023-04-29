@@ -63,7 +63,7 @@ export default function Home({ url }: Props) {
 export async function getServerSideProps() {
   const ngrokRes = await fetch("https://api.ngrok.com/tunnels", {
     headers: {
-      Authorization: "Bearer 2NYzCwy5GHXWL7KtnUAtThR6piv_DmfUbWeoe8SgxMF2eyqT",
+      Authorization: `Bearer ${process.env.ngrok_api_key}`,
       "ngrok-version": "2",
     },
   });
