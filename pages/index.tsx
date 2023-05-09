@@ -4,12 +4,12 @@ import { useRouter } from "next/router";
 // store
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { setAllQueriesURL } from "@/src/store/urlQueriesSlice";
-import { copyState } from "@/src/store/urlQueriesCopy";
+import { copyState } from "@/src/store/urlQueriesCopySlice";
 
 // components
 import Wallets from "../src/components/Wallets/Wallets";
 import Holdings from "@/src/components/Holdings/Holdings";
-import { setTheme } from "@/src/store/pagesSlice";
+import { setApi, setTheme } from "@/src/store/pagesSlice";
 
 type Props = {
   url: string;
@@ -45,7 +45,11 @@ export default function Home({ url }: Props) {
         : document.querySelector("html")!.classList.add("dark");
       dispatch(setTheme(theme));
     }
+    dispatch(setApi(url));
   }, []);
+  useEffect(() => {
+    dispatch(setApi(url));
+  }, [url]);
   return (
     <>
       <Head>

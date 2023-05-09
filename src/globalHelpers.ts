@@ -12,7 +12,11 @@ const MILLION = 1_000_000;
 const THOUSAND = 1_000;
 
 const decimals = 1;
-export const getUsdBalanceString = (alphBalance: number, alphPrice: number): string => {
+export const getUsdBalanceString = (
+  alphBalance: number,
+  alphPrice: number | null
+): string => {
+  if (alphPrice === null) return "";
   let dollarBalance = (Number(alphBalance) / ALPH_BASE) * alphPrice;
   if (dollarBalance > BILLION) return (dollarBalance / BILLION).toFixed(decimals) + "B";
   if (dollarBalance > MILLION) return (dollarBalance / MILLION).toFixed(decimals) + "M";

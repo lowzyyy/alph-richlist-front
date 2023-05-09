@@ -1,7 +1,6 @@
 import { Middleware, PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { initialState, urlQueriesState } from "./urlQueriesSlice";
 import { RootState } from "./store";
-import { url } from "inspector";
 import { validateSortOrder } from "../components/Wallets/validation";
 
 const iState: urlQueriesState = initialState;

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 // store
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { setShowModal } from "@/src/store/filterModalSlice";
-import { copyState, getCopyQuery } from "@/src/store/urlQueriesCopy";
+import { copyState, getCopyQuery } from "@/src/store/urlQueriesCopySlice";
 import { getQuery, loadSavedQueries } from "@/src/store/urlQueriesSlice";
 // components
 import GenesisFilter from "./GenesisFilter";
@@ -57,7 +57,7 @@ function FilterModal() {
   return (
     <div
       onClick={onModal}
-      className="fixed top-0 left-0 h-full w-full bg-slate-200 bg-opacity-40 backdrop-blur-[2px] dark:bg-gray-900 dark:bg-opacity-60 "
+      className="fixed left-0 top-0 h-full w-full bg-slate-200 bg-opacity-40 backdrop-blur-[2px] dark:bg-gray-900 dark:bg-opacity-60 "
     >
       <div
         className={`mx-auto flex h-[450px]
@@ -75,13 +75,13 @@ function FilterModal() {
         <div className="flex justify-between">
           <button
             onClick={onClose}
-            className="rounded-md border border-black py-1 px-3 text-lg transition-all hover:border-indigo-500 hover:bg-indigo-500 hover:text-white dark:border-gray-600"
+            className="rounded-md border border-black px-3 py-1 text-lg transition-all hover:border-indigo-500 hover:bg-indigo-500 hover:text-white dark:border-gray-600"
           >
             Close
           </button>
           <button
             onClick={onApply}
-            className="rounded-md border border-black py-1 px-3 text-base transition-all hover:border-indigo-500 hover:bg-indigo-500 hover:text-white dark:border-gray-600"
+            className="rounded-md border border-black px-3 py-1 text-base transition-all hover:border-indigo-500 hover:bg-indigo-500 hover:text-white dark:border-gray-600"
           >
             Apply
           </button>

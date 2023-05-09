@@ -22,9 +22,9 @@ const robMono = Roboto_Mono({
 
 type Props = {
   w: Wallet;
-  walletLen: number;
-  alphPrice: number;
+  alphPrice: number | null;
   walletNumber: number;
+  hidePosition?: boolean;
 };
 
 const tagColor = {
@@ -35,7 +35,8 @@ const tagColor = {
   Other: "bg-blue-400",
 };
 
-function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
+const walletLen = 18;
+function WalletItem({ w, alphPrice, walletNumber, hidePosition }: Props) {
   const balanceType = useAppSelector((state) => state.pages.balanceType);
   const dispatch = useAppDispatch();
   const isItGenesis = w.isGenesis;
@@ -119,7 +120,7 @@ function WalletItem({ w, walletLen, alphPrice, walletNumber }: Props) {
       <div className="flex flex-col gap-3 xs:w-full xs:gap-2 sm:w-auto">
         <span className={`flex justify-between sm:gap-1`}>
           <span className={`flex gap-2 `}>
-            <span className="font-semibold">{walletNumber}</span>
+            {!hidePosition && <span className="font-semibold">{walletNumber}</span>}
             <Link
               href={`${ALEPHIUM_EXPLORER}/addresses/${w.address}`}
               target="_blank"

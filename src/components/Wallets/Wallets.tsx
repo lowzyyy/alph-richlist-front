@@ -11,8 +11,8 @@ import Navigation from "./Navigation/Navigation";
 import { Wallet, Addresses } from "./WalletTypes";
 // store
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
-import { getCopyQuery } from "@/src/store/urlQueriesCopy";
-import { setGlobalLoading, setPageEnd } from "@/src/store/pagesSlice";
+import { getCopyQuery } from "@/src/store/urlQueriesCopySlice";
+import { setAlphPrice, setGlobalLoading, setPageEnd } from "@/src/store/pagesSlice";
 
 type Props = {
   children?: ReactNode;
@@ -21,7 +21,6 @@ type Props = {
   STATS_API: string;
 };
 
-const walletWidth = 18;
 function Wallets({ pageNum, STATS_API }: Props) {
   const combinedCopyQuery = useAppSelector(getCopyQuery);
   const maximumPage = useAppSelector((state) => state.pages.pageEnd);
@@ -76,6 +75,9 @@ function Wallets({ pageNum, STATS_API }: Props) {
       if (!maximumPage || pageNum === 1) dispatch(setPageEnd(numberOfResults));
     }
   }, [data]);
+  useEffect(() => {
+    if (alphPrice) dispatch(setAlphPrice(alphPrice));
+  }, [alphPrice]);
 
   if (isLoading || isLoadingPrice) return <WalletsSkeleton />;
   if (!isLoading && !isLoadingPrice && globalLoading) return <WalletsSkeleton />;
@@ -88,7 +90,6 @@ function Wallets({ pageNum, STATS_API }: Props) {
       {!!data?.active_addresses && (
         <WalletsList
           wallets={data?.addresses as Wallet[]}
-          walletLen={walletWidth}
           alphPrice={alphPrice as number}
           // alphPrice={0.25}
           pageNumber={pageNum}

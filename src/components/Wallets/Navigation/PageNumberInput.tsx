@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/src/store/storeHooks";
-import { getCopyQuery } from "@/src/store/urlQueriesCopy";
+import { getCopyQuery } from "@/src/store/urlQueriesCopySlice";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 

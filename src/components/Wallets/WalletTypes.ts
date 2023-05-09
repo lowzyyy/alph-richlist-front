@@ -26,3 +26,5 @@ export type Addresses = {
 };
 
 export type queryParam = string | string[] | undefined;
+
+export type indexedWallet = (Wallet & { index: number }) | null;

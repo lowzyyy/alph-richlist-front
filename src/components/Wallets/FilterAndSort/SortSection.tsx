@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { SortAscending, SortDescending } from "@phosphor-icons/react";
 // store
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
-import { copyState, getCopyQuerySplitSort } from "@/src/store/urlQueriesCopy";
+import { copyState, getCopyQuerySplitSort } from "@/src/store/urlQueriesCopySlice";
 import { setSortOrder } from "@/src/store/urlQueriesSlice";
 import { setBalanceType, setGlobalLoading } from "@/src/store/pagesSlice";
 

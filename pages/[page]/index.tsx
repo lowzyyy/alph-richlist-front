@@ -6,8 +6,8 @@ import { useAppDispatch } from "@/src/store/storeHooks";
 import { setAllQueriesURL } from "@/src/store/urlQueriesSlice";
 // components
 import Wallets from "@/src/components/Wallets/Wallets";
-import { copyState } from "@/src/store/urlQueriesCopy";
-import { setTheme } from "@/src/store/pagesSlice";
+import { copyState } from "@/src/store/urlQueriesCopySlice";
+import { setApi, setTheme } from "@/src/store/pagesSlice";
 
 type Props = {
   url: string;
@@ -43,6 +43,9 @@ function Page({ url }: Props) {
       dispatch(setTheme(theme));
     }
   }, []);
+  useEffect(() => {
+    dispatch(setApi(url));
+  }, [url]);
 
   const title = `Alph rich list page ${page}`;
   const pageNumber = +(page as string);

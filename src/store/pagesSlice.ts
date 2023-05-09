@@ -5,6 +5,8 @@ interface page {
   balanceType: "usd" | "locked";
   globalLoading: boolean;
   theme: "white" | "dark";
+  alphPrice: number | null;
+  API_STATS: string;
 }
 
 const initialState: page = {
@@ -12,6 +14,8 @@ const initialState: page = {
   balanceType: "usd",
   globalLoading: false,
   theme: "white",
+  alphPrice: null,
+  API_STATS: "",
 };
 
 export const pagesSlice = createSlice({
@@ -33,6 +37,12 @@ export const pagesSlice = createSlice({
     setTheme: (state, action: PayloadAction<"white" | "dark">) => {
       state.theme = action.payload;
     },
+    setAlphPrice: (state, action: PayloadAction<number | null>) => {
+      state.alphPrice = action.payload;
+    },
+    setApi: (state, action: PayloadAction<string>) => {
+      state.API_STATS = action.payload;
+    },
   },
 });
 
@@ -42,6 +52,8 @@ export const {
   resetBalanceType,
   setGlobalLoading,
   setTheme,
+  setAlphPrice,
+  setApi,
 } = pagesSlice.actions;
 
 export default pagesSlice.reducer;

@@ -11,7 +11,7 @@ import {
 import PageNumberInput from "./PageNumberInput";
 // store
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
-import { getCopyQuery } from "@/src/store/urlQueriesCopy";
+import { getCopyQuery } from "@/src/store/urlQueriesCopySlice";
 import { setGlobalLoading } from "@/src/store/pagesSlice";
 
 type Props = {

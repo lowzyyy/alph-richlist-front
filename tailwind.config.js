@@ -32,11 +32,16 @@ module.exports = {
           "0%": { transform: "translate(0%,-40%)" },
           "100%": { transform: "translate(0%,30%) " },
         },
+        fadeIn: {
+          "0%": { opacity: "0.1" },
+          "100%": { opacity: "1" },
+        },
       },
       animation: {
         slideFromLeft1: "slide_from_left_1 0.3s forwards",
         slideFromLeft2: "slide_from_left_2 0.3s forwards",
         slideFromLeft3: "slide_from_left_3 0.3s forwards",
+        fadeIn: "fadeIn 0.4s forwards",
       },
     },
   },
