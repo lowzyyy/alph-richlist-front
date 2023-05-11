@@ -53,15 +53,8 @@ function WalletItem({ w, alphPrice, walletNumber, hidePosition }: Props) {
       : isItReserved
       ? "Reserved"
       : null;
+
   const fullTagName = tagName;
-  tagName =
-    window.innerWidth < 400
-      ? tagName
-        ? tagName.length > 20
-          ? tagName.slice(0, 18) + ".."
-          : tagName
-        : null
-      : tagName;
 
   tagName = tagName ? tagName[0].toUpperCase() + tagName.slice(1) : null;
   let tagType = "Other";
@@ -70,11 +63,13 @@ function WalletItem({ w, alphPrice, walletNumber, hidePosition }: Props) {
   else if (tagName === "Reserved") tagType = "Reserved";
   const tag = tagName && (
     <span
+      style={{ fontFamily: `${robMono.style.fontFamily}` }}
       data-tooltip-id="tag"
       data-tooltip-content={`${fullTagName}`}
-      className={` rounded-md p-1  text-xs text-black xl:text-sm  ${
-        tagColor[tagType as keyof typeof tagColor] ?? "bg-blue-400"
-      }`}
+      className={`overflow-x-hidden whitespace-nowrap rounded-md p-1 text-xs text-black
+                  xl:text-sm  ${
+                    tagColor[tagType as keyof typeof tagColor] ?? "bg-blue-400"
+                  }`}
     >
       <Tooltip id="tag" openOnClick={window.innerWidth < 1280 ? true : false} />
       {tagName}
@@ -115,9 +110,13 @@ function WalletItem({ w, alphPrice, walletNumber, hidePosition }: Props) {
   };
   return (
     <div
-      className={`border-b  border-black bg-stone-50 p-1 text-sm first:rounded-t-md last:rounded-b-md last:border-b-0 dark:bg-gray-900 xs:flex xs:justify-between xs:p-2 lg:text-base xl:p-4`}
+      className={`border-b  border-black bg-stone-50 p-1 text-sm first:rounded-t-md last:rounded-b-md last:border-b-0 
+      dark:bg-gray-900 
+      xs:flex xs:justify-between xs:p-2 
+      lg:text-base
+      xl:p-4`}
     >
-      <div className="flex flex-col gap-3 xs:w-full xs:gap-2 sm:w-auto">
+      <div className="flex min-w-0 flex-shrink flex-col gap-3 xs:w-full xs:gap-2 sm:w-auto  ">
         <span className={`flex justify-between sm:gap-1`}>
           <span className={`flex gap-2 `}>
             {!hidePosition && <span className="font-semibold">{walletNumber}</span>}
@@ -130,7 +129,7 @@ function WalletItem({ w, alphPrice, walletNumber, hidePosition }: Props) {
               {addressShort}
             </Link>
           </span>
-          <span>{tag}</span>
+          {tag}
         </span>
         <div className="flex items-center justify-between ">
           <span className="flex gap-1">
@@ -155,7 +154,7 @@ function WalletItem({ w, alphPrice, walletNumber, hidePosition }: Props) {
           </span>
         </div>
       </div>
-      <div className=" [&>*]:  hidden sm:flex [&>*]:border-r [&>*]:border-gray-400 [&>*]:p-2">
+      <div className="hidden sm:flex [&>*]:border-r [&>*]:border-gray-400 [&>*]:p-2">
         <div className="flex w-16 flex-col lg:w-20">
           <span>Ins</span>
           <span>{ins}</span>

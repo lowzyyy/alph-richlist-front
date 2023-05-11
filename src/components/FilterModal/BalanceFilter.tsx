@@ -86,9 +86,10 @@ function BalanceFilter() {
         <input
           onChange={onInputLeft}
           maxLength={8}
-          className={`w-24  rounded-md border p-1 text-center outline-none placeholder:text-gray-300 dark:bg-gray-400 dark:text-black dark:placeholder:text-slate-500 ${
-            testL ? "border-slate-800" : "border-red-600"
-          }`}
+          className={`w-24  rounded-md border p-1 text-center outline-none placeholder:text-gray-300 
+                      dark:bg-gray-300 dark:text-black dark:placeholder:text-slate-400 ${
+                        testL ? "border-slate-800" : "border-red-600"
+                      }`}
           value={left}
           placeholder="100k"
         />
@@ -96,9 +97,10 @@ function BalanceFilter() {
         <input
           onChange={onInputRight}
           maxLength={8}
-          className={`w-24 rounded-md border p-1 text-center outline-none placeholder:text-gray-300 dark:bg-gray-400 dark:text-black dark:placeholder:text-slate-500 ${
-            testR ? "border-slate-800" : "border-red-600"
-          }`}
+          className={`w-24 rounded-md border p-1 text-center outline-none placeholder:text-gray-300 
+                      dark:bg-gray-300 dark:text-black dark:placeholder:text-slate-400 ${
+                        testR ? "border-slate-800" : "border-red-600"
+                      }`}
           value={right}
           placeholder="5M"
         />

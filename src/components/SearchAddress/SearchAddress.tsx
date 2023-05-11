@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { CircleDashed, MagnifyingGlass } from "@phosphor-icons/react";
 
 //store
@@ -14,6 +14,7 @@ function SearchAddress() {
   const dispatch = useAppDispatch();
   const alphPrice = useAppSelector((state) => state.pages.alphPrice);
   const [address, setAddress] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const { data, isLoading, error } = useSearchAddress(address);
   const onModal = (e: any) => {
@@ -24,7 +25,10 @@ function SearchAddress() {
   };
 
   const onSubmit = (e: any) => {
-    if (e.key === "Enter") setAddress(e.target.value);
+    if (e.key === "Enter") setAddress(inputRef.current!.value);
+  };
+  const onMagnifyingGlass = () => {
+    setAddress(inputRef.current!.value);
   };
 
   const walletInfo =
@@ -57,6 +61,7 @@ function SearchAddress() {
         <div className=" flex w-full p-3 sm:justify-center">
           <div className="relative flex h-10 w-full items-center sm:w-[500px]">
             <input
+              ref={inputRef}
               onKeyDown={onSubmit}
               className={`h-full w-full rounded-md border border-black bg-white p-1 px-2 pr-9 outline-none focus:border-2
                         dark:text-black dark:placeholder:text-gray-500 dark:focus:border-stone-700 dark:focus:shadow-[0px_0px_5px_2px_rgba(51,37,36,1)] `}
@@ -64,6 +69,7 @@ function SearchAddress() {
               placeholder="Search address..."
             />
             <MagnifyingGlass
+              onClick={onMagnifyingGlass}
               className="absolute right-2 cursor-pointer dark:text-black"
               size={24}
               weight="duotone"
@@ -90,7 +96,9 @@ function SearchAddress() {
             </div>
           )}
 
-          {data && !data.index && !data.indexNoGen && <p className="px-3">No results.</p>}
+          {data && !data.index && !data.indexNoGen && (
+            <p className="mb-2 px-3 md:mb-0">No results.</p>
+          )}
           {isLoading && (
             <CircleDashed className="mx-auto mb-4 animate-spin" size={30} weight="bold" />
           )}
