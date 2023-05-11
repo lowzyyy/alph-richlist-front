@@ -17,6 +17,8 @@ function SearchAddress() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { data, isLoading, error } = useSearchAddress(address);
+
+  // callbacks
   const onModal = (e: any) => {
     if (e.target === e.currentTarget) {
       document.body.style.overflowY = "auto";
@@ -48,7 +50,13 @@ function SearchAddress() {
     >
       <div
         style={{
-          height: `${data ? getHeight(data.index, data.indexNoGen) : heights.big["low"]}`,
+          height: `${
+            data
+              ? getHeight(data.index, data.indexNoGen)
+              : window.innerWidth < 768
+              ? heights.mobile["low"]
+              : heights.big["low"]
+          }`,
         }}
         className={`mx-auto flex 
         w-[95%] translate-y-[70px] animate-fadeIn flex-col gap-2 rounded-md bg-indigo-50 shadow-[0_0px_20px_8px_rgba(0,0,0,0.75)] transition-all 
@@ -91,7 +99,11 @@ function SearchAddress() {
             )}
           </div>
           {data && data.walletInfo && (
-            <div className="mx-auto mb-1 w-[99%] animate-fadeIn rounded-md shadow-[0px_0px_3px_1px_rgba(41,37,36,0.3)]  dark:shadow-[0px_0px_3px_2px_rgba(41,37,36,1)] xl:w-full">
+            <div
+              className="mx-auto mb-1 w-[99%] animate-fadeIn rounded-md shadow-[0px_0px_3px_1px_rgba(41,37,36,0.3)]  
+            dark:shadow-[0px_0px_3px_2px_rgba(41,37,36,1)] 
+            xl:w-full"
+            >
               {walletInfo}
             </div>
           )}
