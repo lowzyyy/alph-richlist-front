@@ -26,7 +26,6 @@ function Layout(props: { children: ReactNode }) {
   const [clicked, setClicked] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
-
   const onTheme = () => {
     if (clicked === true) return;
     else setClicked(true);
@@ -69,16 +68,18 @@ function Layout(props: { children: ReactNode }) {
               </span>
             </div>
             <div className="flex items-center gap-4 xs:gap-6 sm:gap-8">
-              <span
-                onClick={onSearch}
-                className="cursor-pointer rounded-md bg-slate-300 p-1 dark:bg-gray-800"
-              >
-                <MagnifyingGlass
-                  size={25}
-                  weight="bold"
-                  className="text-black dark:text-stone-200"
-                />
-              </span>
+              {router.pathname !== "/maintenance" && (
+                <span
+                  onClick={onSearch}
+                  className="cursor-pointer rounded-md bg-slate-300 p-1 dark:bg-gray-800"
+                >
+                  <MagnifyingGlass
+                    size={25}
+                    weight="bold"
+                    className="text-black dark:text-stone-200"
+                  />
+                </span>
+              )}
               <div onClick={onTheme} className="cursor-pointer">
                 {theme === "white" ? (
                   <Sun size={30} className="text-zinc-950" weight="duotone" />
