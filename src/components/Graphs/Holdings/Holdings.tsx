@@ -17,19 +17,20 @@ import { Bar } from "react-chartjs-2";
 import { AddressHoldings } from "./HoldingsTypes";
 import { labels } from "./graphSettings";
 import { useAppSelector } from "@/src/store/storeHooks";
+import GraphWrapper from "../GraphWrapper";
 
 type Props = {
-  HOLDINGS_API: string;
+  API: string;
 };
 
-function Holdings({ HOLDINGS_API }: Props) {
+function Holdings({ API }: Props) {
   const [shouldMaintainAspect, setShouldMaintainAspect] = useState(true);
   const theme = useAppSelector((state) => state.pages.theme);
   const {
     data: holdingsData,
     isLoading,
     error,
-  } = useSWR<AddressHoldings[]>(`${HOLDINGS_API}/holdings`, (url) =>
+  } = useSWR<AddressHoldings[]>(`${API}/holdings`, (url) =>
     fetch(url, { headers: { "ngrok-skip-browser-warning": "true" } }).then((res) =>
       res.json()
     )
@@ -108,17 +109,17 @@ function Holdings({ HOLDINGS_API }: Props) {
   };
   if (error) return <p>Error loading wallet holdings graph</p>;
   return (
-    <div className="mx-auto mb-6 md:w-[80%] xl:w-[55%]">
-      <p className="mb-1 text-center text-xs font-medium text-gray-600 dark:text-inherit xs:text-sm lg:text-base lg:font-medium">
+    <GraphWrapper>
+      {/* <p className="mb-1 text-center text-xs font-medium text-gray-600 dark:text-inherit xs:text-sm lg:text-base lg:font-medium">
         Number of wallets per amount
-      </p>
+      </p> */}
       <div className="mb-4 h-52 xs:h-auto xs:w-full">
         <Bar className="" data={data} options={options}></Bar>
       </div>
       <p className="text-xs text-gray-500 dark:text-gray-400 xs:text-sm">
         *include/exclude Genesis, Exchange, Pool addresses
       </p>
-    </div>
+    </GraphWrapper>
   );
 }
 

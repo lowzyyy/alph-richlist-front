@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 // store
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
@@ -8,8 +8,9 @@ import { copyState } from "@/src/store/urlQueriesCopySlice";
 
 // components
 import Wallets from "../src/components/Wallets/Wallets";
-import Holdings from "@/src/components/Holdings/Holdings";
+import Holdings from "@/src/components/Graphs/Holdings/Holdings";
 import { setApi, setTheme } from "@/src/store/pagesSlice";
+import TotalAddresses from "@/src/components/Graphs/TotalAddresses/TotalAddresses";
 
 type Props = {
   url: string;
@@ -17,6 +18,8 @@ type Props = {
 
 export default function Home({ url }: Props) {
   const router = useRouter();
+  const [currTime, setCurrtime] = useState(Math.floor(new Date().getTime() / 1000));
+  const [graphType, setGraphType] = useState<"amount" | "day">("amount");
   const dispatch = useAppDispatch();
   const globalLoading = useAppSelector((state) => state.pages.globalLoading);
   const { sort, order, filter, age, balance, zeroOuts, dormant } = router.query;
@@ -50,6 +53,10 @@ export default function Home({ url }: Props) {
   useEffect(() => {
     dispatch(setApi(url));
   }, [url]);
+
+  const onGraphType = (e: any) => {
+    setGraphType(e.target.textContent.trim());
+  };
   return (
     <>
       <Head>
@@ -58,7 +65,34 @@ export default function Home({ url }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {!globalLoading && <Holdings HOLDINGS_API={url} />}
+      <span className="text-sm md:text-base">
+        Addresses per:{" "}
+        <span
+          onClick={onGraphType}
+          className={`cursor-pointer ${
+            graphType === "amount"
+              ? " rounded-sm  bg-slate-300 p-1 text-center dark:bg-gray-900  dark:text-blue-100"
+              : ""
+          }`}
+        >
+          amount
+        </span>{" "}
+        |{" "}
+        <span
+          onClick={onGraphType}
+          className={`cursor-pointer ${
+            graphType === "day"
+              ? "rounded-sm  bg-slate-300 p-1 text-center dark:bg-gray-900  dark:text-blue-100"
+              : ""
+          }`}
+        >
+          day
+        </span>
+      </span>
+      {!globalLoading && graphType === "amount" && <Holdings API={url} />}
+      {!globalLoading && graphType === "day" && (
+        <TotalAddresses currentTimestamp={currTime} API={url} />
+      )}
       <Wallets pageNum={1} STATS_API={url}></Wallets>
     </>
   );
