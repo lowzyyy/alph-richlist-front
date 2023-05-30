@@ -65,30 +65,32 @@ export default function Home({ url }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <span className="text-sm md:text-base">
-        Addresses per:{" "}
-        <span
-          onClick={onGraphType}
-          className={`cursor-pointer ${
-            graphType === "amount"
-              ? " rounded-sm  bg-slate-300 p-1 text-center dark:bg-gray-900  dark:text-blue-100"
-              : ""
-          }`}
-        >
-          amount
-        </span>{" "}
-        |{" "}
-        <span
-          onClick={onGraphType}
-          className={`cursor-pointer ${
-            graphType === "day"
-              ? "rounded-sm  bg-slate-300 p-1 text-center dark:bg-gray-900  dark:text-blue-100"
-              : ""
-          }`}
-        >
-          day
-        </span>
-      </span>
+      <div className="flex justify-center text-sm md:text-base ">
+        <div>
+          Addresses per:{" "}
+          <span
+            onClick={onGraphType}
+            className={`cursor-pointer ${
+              graphType === "amount"
+                ? " rounded-md  bg-slate-300 p-1 text-center transition-all hover:bg-gray-400 dark:bg-gray-900  dark:text-blue-100 dark:hover:bg-gray-800"
+                : ""
+            }`}
+          >
+            amount
+          </span>{" "}
+          |{" "}
+          <span
+            onClick={onGraphType}
+            className={`cursor-pointer ${
+              graphType === "day"
+                ? "rounded-md  bg-slate-300 p-1 text-center transition-all hover:bg-gray-400 dark:bg-gray-900  dark:text-blue-100 dark:hover:bg-gray-800"
+                : ""
+            }`}
+          >
+            day
+          </span>
+        </div>
+      </div>
       {!globalLoading && graphType === "amount" && <Holdings API={url} />}
       {!globalLoading && graphType === "day" && (
         <TotalAddresses currentTimestamp={currTime} API={url} />
