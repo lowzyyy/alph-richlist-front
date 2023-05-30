@@ -18,7 +18,7 @@ type Props = {
 
 export default function Home({ url }: Props) {
   const router = useRouter();
-  const [currTime, setCurrtime] = useState(Math.floor(new Date().getTime() / 1000));
+  const [currTime, setCurrtime] = useState(0);
   const [graphType, setGraphType] = useState<"amount" | "day">("amount");
   const dispatch = useAppDispatch();
   const globalLoading = useAppSelector((state) => state.pages.globalLoading);
@@ -49,6 +49,7 @@ export default function Home({ url }: Props) {
       dispatch(setTheme(theme));
     }
     dispatch(setApi(url));
+    setCurrtime(Math.floor(new Date().getTime() / 1000));
   }, []);
   useEffect(() => {
     dispatch(setApi(url));
