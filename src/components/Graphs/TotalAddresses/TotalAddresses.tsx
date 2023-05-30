@@ -99,7 +99,13 @@ function TotalAddresses({ API, currentTimestamp }: Props) {
     showAxesLabel,
     chartInterval
   );
-  const data = setGraphData(theme, totalAddresses, alphPriceHistory, currentPrice);
+  const data = setGraphData(
+    theme,
+    totalAddresses,
+    chartInterval,
+    alphPriceHistory,
+    currentPrice
+  );
 
   if (error) return <p>Error loading wallet holdings graph</p>;
   if (errorPriceHistory) return <p>Error loading alph price history</p>;

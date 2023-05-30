@@ -135,6 +135,7 @@ export const setGraphOptions = (
 export const setGraphData = (
   theme: "white" | "dark",
   totalAddresses: TotalAddressPerDate[] | undefined,
+  chartInterval: "day" | "month",
   alphPriceHistory: { prices: { 0: number; 1: number }[] } | undefined,
   currentPrice: number | null
 ) => {
@@ -146,7 +147,7 @@ export const setGraphData = (
     labels: totalAddresses ? totalAddresses.map((el) => el?.date) : [],
     datasets: [
       {
-        label: "Per day",
+        label: chartInterval === "day" ? "Per day" : "Per month",
         data: totalAddresses ? totalAddresses.map((el) => el?.amount) : [],
         backgroundColor: perDateColor,
         borderColor: perDateColor,
