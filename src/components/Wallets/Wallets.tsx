@@ -8,11 +8,13 @@ import WalletsSkeleton from "./WalletsSkeleton";
 import FilterSection from "./FilterAndSort/FilterAndSortSection";
 import Navigation from "./Navigation/Navigation";
 // helpers
-import { Wallet, Addresses } from "./WalletTypes";
+import { Wallet } from "./WalletTypes";
 // store
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { getCopyQuery } from "@/src/store/urlQueriesCopySlice";
 import { setAlphPrice, setGlobalLoading, setPageEnd } from "@/src/store/pagesSlice";
+import { useGetAddresses } from "./hooks/useGetAddresses";
+import { useGetAlphPrice } from "./hooks/useGetAlphPrice";
 
 type Props = {
   children?: ReactNode;
@@ -33,36 +35,9 @@ function Wallets({ pageNum, STATS_API }: Props) {
     data,
     isLoading,
     error: errorAddresses,
-  } = useSWR<Addresses>(
-    `${STATS_API}/addresses?page=${pageNum}${combinedCopyQuery}`,
-    (url) =>
-      fetch(url, {
-        headers: {
-          "ngrok-skip-browser-warning": "true",
-        },
-      }).then((res) => res.json())
-  );
+  } = useGetAddresses(STATS_API, pageNum, combinedCopyQuery);
   // GET ALPH PRICE
-  const { data: alphPrice, isLoading: isLoadingPrice } = useSWR<number>(
-    "https://api.coingecko.com/api/v3/coins/alephium",
-    (url) =>
-      fetch(url).then(async (res) => {
-        const info = await res.json();
-        return info.market_data.current_price.usd;
-      }),
-    {
-      onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-        // Never retry on 404/403
-        if (error.status === 404) return;
-        if (error.status === 403) return;
-        // Only retry up to 3 times.
-        if (retryCount >= 3) return;
-        // Retry after 5 seconds.
-        setTimeout(() => revalidate({ retryCount }), 5000);
-      },
-    }
-  );
-
+  const { data: alphPrice, isLoading: isLoadingPrice } = useGetAlphPrice();
   // set Maximum navigation page
   useEffect(() => {
     if (data) {

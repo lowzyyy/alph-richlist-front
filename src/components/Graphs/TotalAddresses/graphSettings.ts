@@ -33,6 +33,7 @@ export const setGraphOptions = (
         zoom: {
           mode: "x",
           drag: { enabled: true },
+          pinch: { enabled: true },
         },
       },
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import useSWR from "swr";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,6 +22,7 @@ ChartJS.register(
 );
 ChartJS.defaults.font.family = "__Roboto_0f2970";
 import { Line } from "react-chartjs-2";
+import { CircleDashed } from "@phosphor-icons/react";
 
 import { useAppSelector } from "@/src/store/storeHooks";
 // my imports
@@ -33,7 +33,6 @@ import { setGraphData, setGraphOptions } from "./graphSettings";
 // hooks
 import { useTotalAddresses } from "./hooks/useTotalAddresses";
 import { usePriceHistory } from "./hooks/usePriceHistory";
-import { CircleDashed } from "@phosphor-icons/react";
 
 type Props = {
   API: string;
@@ -109,7 +108,6 @@ function TotalAddresses({ API, currentTimestamp }: Props) {
 
   if (error) return <p>Error loading wallet holdings graph</p>;
   if (errorPriceHistory) return <p>Error loading alph price history</p>;
-  // if (isLoading || isLoadingHistoryPrice) return;
   return (
     <GraphWrapper>
       <div className="mb-4 h-52 xs:h-auto xs:w-full">
