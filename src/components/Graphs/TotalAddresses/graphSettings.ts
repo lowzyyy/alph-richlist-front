@@ -36,9 +36,9 @@ export const setGraphOptions = (
           pinch: { enabled: true },
         },
         pan: {
-          enabled: true,
+          enabled: showAxesLabel,
           mode: "x",
-          modifierKey: showAxesLabel ? "shift" : undefined,
+          modifierKey: "shift",
         },
       },
 
