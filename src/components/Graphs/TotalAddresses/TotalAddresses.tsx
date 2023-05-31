@@ -29,7 +29,10 @@ import { useAppSelector } from "@/src/store/storeHooks";
 import GraphWrapper from "../GraphWrapper";
 import { chartAreaBorder } from "./plugins/chartAreaBorder";
 import { getMonthlyTotalAdd } from "./helpers";
-import { setGraphData, setGraphOptions } from "./graphSettings";
+import {
+  setTotalAddressesGraphData,
+  setTotalAddressesGraphOptions,
+} from "./graphSettings";
 // hooks
 import { useTotalAddresses } from "./hooks/useTotalAddresses";
 import { usePriceHistory } from "./hooks/usePriceHistory";
@@ -92,13 +95,13 @@ function TotalAddresses({ API, currentTimestamp }: Props) {
     return document.removeEventListener("resize", onResizeChart);
   }, []);
 
-  const options = setGraphOptions(
+  const options = setTotalAddressesGraphOptions(
     theme,
     shouldMaintainAspect,
     showAxesLabel,
     chartInterval
   );
-  const data = setGraphData(
+  const data = setTotalAddressesGraphData(
     theme,
     totalAddresses,
     chartInterval,

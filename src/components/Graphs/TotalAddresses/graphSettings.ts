@@ -3,7 +3,7 @@ import { TotalAddressPerDate } from "./TotalAddressesTypes";
 
 const axesLabelFontSize = 13;
 
-export const setGraphOptions = (
+export const setTotalAddressesGraphOptions = (
   theme: "white" | "dark",
   shouldMaintainAspect: boolean,
   showAxesLabel: boolean,
@@ -138,7 +138,7 @@ export const setGraphOptions = (
   return options;
 };
 
-export const setGraphData = (
+export const setTotalAddressesGraphData = (
   theme: "white" | "dark",
   totalAddresses: TotalAddressPerDate[] | undefined,
   chartInterval: "day" | "month",
