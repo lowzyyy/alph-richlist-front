@@ -35,6 +35,11 @@ export const setGraphOptions = (
           drag: { enabled: true },
           pinch: { enabled: true },
         },
+        pan: {
+          enabled: true,
+          mode: "x",
+          modifierKey: showAxesLabel ? "shift" : undefined,
+        },
       },
 
       chartAreaBorder: {
