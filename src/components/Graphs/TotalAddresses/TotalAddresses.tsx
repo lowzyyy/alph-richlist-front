@@ -54,7 +54,7 @@ function TotalAddresses({ API, currentTimestamp }: Props) {
     data: alphPriceHistory,
     isLoading: isLoadingHistoryPrice,
     error: errorPriceHistory,
-  } = usePriceHistory(currentTimestamp);
+  } = usePriceHistory(API);
 
   // get monthly addresses aggregated by month
   const totalAddressesMonthly = useMemo(() => {
