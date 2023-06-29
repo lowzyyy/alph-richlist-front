@@ -111,8 +111,8 @@ export async function getServerSideProps() {
 
   const { tunnels } = await ngrokRes.json();
 
-  const url: string = tunnels.find((t: any) =>
-    t.public_url.startsWith("https")
+  const url: string = tunnels.find(
+    (t: any) => t.public_url.startsWith("https") && t.metadata === "alph-richlist"
   ).public_url;
 
   return {
