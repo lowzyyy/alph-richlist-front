@@ -1,3 +1,3 @@
 ## Alephium richlist
 
-[Click](https://sd-vreme.vercel.app/) to view the app
+[Click](https://alph-richlist.vercel.app/) to view the app
