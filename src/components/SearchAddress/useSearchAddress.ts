@@ -1,18 +1,11 @@
-import { useAppSelector } from "@/src/store/storeHooks";
 import useSWR from "swr";
-import { Wallet } from "../Wallets/WalletTypes";
+import { AddressResult } from "./SearchAddressTypes";
 
 export const useSearchAddress = (address: string) => {
-  const api = useAppSelector((state) => state.pages.API_STATS);
-
-  const { data, isLoading, error } = useSWR<{
-    index: number | null;
-    indexNoGen: number | null;
-    walletInfo: Wallet;
-  }>(
-    !!!api || !!!address ? null : [api, address],
-    ([url, key]: [null | string, null | string]) =>
-      fetch(url + `/address/${key}`, {
+  const { data, isLoading, error } = useSWR<AddressResult>(
+    !!!address ? null : address,
+    (key: [null | string, null | string]) =>
+      fetch(`/api/address/${key}`, {
         headers: {
           "ngrok-skip-browser-warning": "true",
         },

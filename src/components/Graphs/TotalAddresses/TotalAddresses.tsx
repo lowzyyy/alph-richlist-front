@@ -38,10 +38,9 @@ import { useTotalAddresses } from "./hooks/useTotalAddresses";
 import { usePriceHistory } from "./hooks/usePriceHistory";
 
 type Props = {
-  API: string;
   currentTimestamp: number;
 };
-function TotalAddresses({ API, currentTimestamp }: Props) {
+function TotalAddresses({ currentTimestamp }: Props) {
   const [showAxesLabel, setShowAxesLabel] = useState(true);
   const [shouldMaintainAspect, setShouldMaintainAspect] = useState(true);
   const [chartInterval, setChartInterval] = useState<"day" | "month">("day");
@@ -49,12 +48,12 @@ function TotalAddresses({ API, currentTimestamp }: Props) {
   const currentPrice = useAppSelector((state) => state.pages.alphPrice);
   const theme = useAppSelector((state) => state.pages.theme);
 
-  const { data: totalData, isLoading, error } = useTotalAddresses(API);
+  const { data: totalData, isLoading, error } = useTotalAddresses();
   const {
     data: alphPriceHistory,
     isLoading: isLoadingHistoryPrice,
     error: errorPriceHistory,
-  } = usePriceHistory(API);
+  } = usePriceHistory();
 
   // get monthly addresses aggregated by month
   const totalAddressesMonthly = useMemo(() => {
@@ -116,7 +115,11 @@ function TotalAddresses({ API, currentTimestamp }: Props) {
       <div className="mb-4 h-52 xs:h-auto xs:w-full">
         {isLoading || isLoadingHistoryPrice ? (
           <div className="flex h-full items-center md:h-[350px]">
-            <CircleDashed className="mx-auto mb-4 animate-spin" size={30} weight="bold" />
+            <CircleDashed
+              className="mx-auto mb-4 animate-spin"
+              size={30}
+              weight="bold"
+            />
           </div>
         ) : (
           <Line

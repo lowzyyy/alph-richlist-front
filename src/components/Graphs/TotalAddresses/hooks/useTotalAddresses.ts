@@ -1,12 +1,12 @@
 import useSWR from "swr";
 import { TotalAddressPerDate } from "../TotalAddressesTypes";
 
-export const useTotalAddresses = (API: string) => {
+export const useTotalAddresses = () => {
   const { data, isLoading, error } = useSWR<TotalAddressPerDate[]>(
-    `${API}/totalAddresses`,
+    `/api/totalAddresses`,
     (url) =>
-      fetch(url, { headers: { "ngrok-skip-browser-warning": "true" } }).then((res) =>
-        res.json()
+      fetch(url, { headers: { "ngrok-skip-browser-warning": "true" } }).then(
+        (res) => res.json()
       )
   );
 

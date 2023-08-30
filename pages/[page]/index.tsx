@@ -7,17 +7,18 @@ import { setAllQueriesURL } from "@/src/store/urlQueriesSlice";
 // components
 import Wallets from "@/src/components/Wallets/Wallets";
 import { copyState } from "@/src/store/urlQueriesCopySlice";
-import { setApi, setTheme } from "@/src/store/pagesSlice";
+import { setTheme } from "@/src/store/pagesSlice";
 
 type Props = {
   url: string;
 };
 
-function Page({ url }: Props) {
+function Page() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const { page, sort, order, filter, age, balance, zeroOuts, dormant } = router.query;
+  const { page, sort, order, filter, age, balance, zeroOuts, dormant } =
+    router.query;
   useEffect(() => {
     dispatch(
       setAllQueriesURL({
@@ -34,7 +35,10 @@ function Page({ url }: Props) {
 
   // set dark mode on load
   useEffect(() => {
-    const theme = localStorage.getItem("AlphRichlistTheme") as "white" | "dark" | null;
+    const theme = localStorage.getItem("AlphRichlistTheme") as
+      | "white"
+      | "dark"
+      | null;
     if (!theme) localStorage.setItem("AlphRichlistTheme", "white");
     else {
       theme === "white"
@@ -43,9 +47,6 @@ function Page({ url }: Props) {
       dispatch(setTheme(theme));
     }
   }, []);
-  useEffect(() => {
-    dispatch(setApi(url));
-  }, [url]);
 
   const title = `Alph rich list page ${page}`;
   const pageNumber = +(page as string);
@@ -58,29 +59,10 @@ function Page({ url }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Wallets pageNum={pageNumber} STATS_API={url}></Wallets>
+        <Wallets pageNum={pageNumber}></Wallets>
       </div>
     </>
   );
 }
 
 export default Page;
-
-export async function getServerSideProps() {
-  const ngrokRes = await fetch("https://api.ngrok.com/tunnels", {
-    headers: {
-      Authorization: `Bearer ${process.env.ngrok_api_key}`,
-      "ngrok-version": "2",
-    },
-  });
-  if (!ngrokRes.ok) console.log(`ERROR NGROK API: ${ngrokRes.status}`);
-
-  const { tunnels } = await ngrokRes.json();
-  const url: string = tunnels.find((t: any) =>
-    t.public_url.startsWith("https")
-  ).public_url;
-
-  return {
-    props: { url }, // will be passed to the page component as props
-  };
-}

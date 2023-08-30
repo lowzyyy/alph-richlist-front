@@ -12,7 +12,11 @@ import { Wallet } from "./WalletTypes";
 // store
 import { useAppDispatch, useAppSelector } from "@/src/store/storeHooks";
 import { getCopyQuery } from "@/src/store/urlQueriesCopySlice";
-import { setAlphPrice, setGlobalLoading, setPageEnd } from "@/src/store/pagesSlice";
+import {
+  setAlphPrice,
+  setGlobalLoading,
+  setPageEnd,
+} from "@/src/store/pagesSlice";
 import { useGetAddresses } from "./hooks/useGetAddresses";
 import { useGetAlphPrice } from "./hooks/useGetAlphPrice";
 
@@ -20,10 +24,9 @@ type Props = {
   children?: ReactNode;
   wallets?: Wallet[];
   pageNum: number;
-  STATS_API: string;
 };
 
-function Wallets({ pageNum, STATS_API }: Props) {
+function Wallets({ pageNum }: Props) {
   const combinedCopyQuery = useAppSelector(getCopyQuery);
   const maximumPage = useAppSelector((state) => state.pages.pageEnd);
   const globalLoading = useAppSelector((state) => state.pages.globalLoading);
@@ -35,7 +38,7 @@ function Wallets({ pageNum, STATS_API }: Props) {
     data,
     isLoading,
     error: errorAddresses,
-  } = useGetAddresses(STATS_API, pageNum, combinedCopyQuery);
+  } = useGetAddresses(pageNum, combinedCopyQuery);
   // GET ALPH PRICE
   const { data: alphPrice, isLoading: isLoadingPrice } = useGetAlphPrice();
   // set Maximum navigation page
@@ -55,7 +58,8 @@ function Wallets({ pageNum, STATS_API }: Props) {
   }, [alphPrice]);
 
   if (isLoading || isLoadingPrice) return <WalletsSkeleton />;
-  if (!isLoading && !isLoadingPrice && globalLoading) return <WalletsSkeleton />;
+  if (!isLoading && !isLoadingPrice && globalLoading)
+    return <WalletsSkeleton />;
 
   if (errorAddresses) return <p>Error loading addresses</p>;
   return (

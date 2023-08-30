@@ -8,7 +8,14 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-ChartJS.register(CategoryScale, LogarithmicScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LogarithmicScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 import { Bar } from "react-chartjs-2";
 
 //my imports
@@ -17,15 +24,13 @@ import { useAppSelector } from "@/src/store/storeHooks";
 import GraphWrapper from "../GraphWrapper";
 import { useGetHoldings } from "./hooks/useGetHoldings";
 
-type Props = {
-  API: string;
-};
+type Props = {};
 
-function Holdings({ API }: Props) {
+function Holdings() {
   const [shouldMaintainAspect, setShouldMaintainAspect] = useState(true);
   const theme = useAppSelector((state) => state.pages.theme);
 
-  const { data: holdingsData, isLoading, error } = useGetHoldings(API);
+  const { data: holdingsData, isLoading, error } = useGetHoldings();
   let holdings = holdingsData ? holdingsData : [null, null];
 
   const onResizeChart = () => {

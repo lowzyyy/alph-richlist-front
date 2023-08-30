@@ -18,9 +18,12 @@ export const getUsdBalanceString = (
 ): string => {
   if (alphPrice === null) return "";
   let dollarBalance = (Number(alphBalance) / ALPH_BASE) * alphPrice;
-  if (dollarBalance > BILLION) return (dollarBalance / BILLION).toFixed(decimals) + "B";
-  if (dollarBalance > MILLION) return (dollarBalance / MILLION).toFixed(decimals) + "M";
-  if (dollarBalance > THOUSAND) return (dollarBalance / THOUSAND).toFixed(decimals) + "K";
+  if (dollarBalance > BILLION)
+    return (dollarBalance / BILLION).toFixed(decimals) + "B";
+  if (dollarBalance > MILLION)
+    return (dollarBalance / MILLION).toFixed(decimals) + "M";
+  if (dollarBalance > THOUSAND)
+    return (dollarBalance / THOUSAND).toFixed(decimals) + "K";
   return dollarBalance.toFixed(decimals);
 };
 
@@ -175,3 +178,22 @@ export const genesis_addresses = [
   "Wz8UJ2YZqQxBN2Af9fvTpDQR3daZUC3hpPrc6omCP2U3iYqAxCVPCdPtgocRTsZfYrgvswf63DUyLda4QKhmGtzkpwcutG2SwReiv6p7SQhkxYfQT3S2cFGGyqkbAvoamqwcJD",
   "17CtvwRZsaAhDjVLDm1YWNigKDETZbpcwqbrSkSsnV3XH",
 ];
+
+export const getAPI = async () => {
+  const ngrokRes = await fetch("https://api.ngrok.com/tunnels", {
+    headers: {
+      Authorization: `Bearer ${process.env.ngrok_api_key}`,
+      "ngrok-version": "2",
+    },
+  });
+  if (!ngrokRes.ok) console.log(`ERROR NGROK API: ${ngrokRes.status}`);
+
+  const { tunnels } = await ngrokRes.json();
+
+  const url: string = tunnels.find(
+    (t: any) =>
+      t.public_url.startsWith("https") && t.metadata === "alph-richlist"
+  ).public_url;
+
+  return url;
+};

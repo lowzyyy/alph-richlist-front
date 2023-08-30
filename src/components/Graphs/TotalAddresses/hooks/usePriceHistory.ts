@@ -1,15 +1,16 @@
 import useSWR from "swr";
+import { Prices } from "../TotalAddressesTypes";
 
 const seconds_in_day = 86_400;
-export const usePriceHistory = (API: string) => {
-  const { data, isLoading, error } = useSWR<{
-    prices: { 0: number; 1: number }[];
-  }>(`${API}/priceHistory`, (url) =>
-    fetch(url, {
-      headers: {
-        "ngrok-skip-browser-warning": "true",
-      },
-    }).then((res) => res.json())
+export const usePriceHistory = () => {
+  const { data, isLoading, error } = useSWR<Prices>(
+    `/api/priceHistory`,
+    (url) =>
+      fetch(url, {
+        headers: {
+          "ngrok-skip-browser-warning": "true",
+        },
+      }).then((res) => res.json())
   );
 
   return { data, isLoading, error };

@@ -6,7 +6,7 @@ interface page {
   globalLoading: boolean;
   theme: "white" | "dark";
   alphPrice: number | null;
-  API_STATS: string;
+  // API_STATS: string;
 }
 
 const initialState: page = {
@@ -15,7 +15,7 @@ const initialState: page = {
   globalLoading: false,
   theme: "white",
   alphPrice: null,
-  API_STATS: "",
+  // API_STATS: "",
 };
 
 export const pagesSlice = createSlice({
@@ -40,9 +40,9 @@ export const pagesSlice = createSlice({
     setAlphPrice: (state, action: PayloadAction<number | null>) => {
       state.alphPrice = action.payload;
     },
-    setApi: (state, action: PayloadAction<string>) => {
-      state.API_STATS = action.payload;
-    },
+    // setApi: (state, action: PayloadAction<string>) => {
+    //   state.API_STATS = action.payload;
+    // },
   },
 });
 
@@ -53,7 +53,7 @@ export const {
   setGlobalLoading,
   setTheme,
   setAlphPrice,
-  setApi,
+  // setApi,
 } = pagesSlice.actions;
 
 export default pagesSlice.reducer;
