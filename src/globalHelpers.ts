@@ -27,6 +27,15 @@ export const getUsdBalanceString = (
   return dollarBalance.toFixed(decimals);
 };
 
+export const formatNumbers = (value: number | null) => {
+  if (!value && value !== 0) return "";
+  if (value === 0) return "0";
+  if (value < 1000) return value + "";
+  if (value < 1_000_000) return (value / 1000).toFixed(0) + "K";
+  if (value < 1_000_000_000) return (value / 1_000_000).toFixed(1) + "M";
+  return (value / 1_000_000_000).toFixed(0) + "B";
+};
+
 // locked balance format
 // example1: 234.07M -> 234.0 -> 234M
 // example2: 234.66 -> 234.6

@@ -1,5 +1,6 @@
 import type { ChartOptions } from "chart.js";
 import { AddressHoldings } from "./HoldingsTypes";
+import { formatNumbers, getUsdBalanceString } from "@/src/globalHelpers";
 
 export const labels = [
   "1-1000",
@@ -31,17 +32,33 @@ export const setHoldingsGraphOptions = (
       tooltip: {
         callbacks: {
           label: (toolTipItem) => {
-            return "Number of wallets: " + toolTipItem.formattedValue;
+            return toolTipItem.datasetIndex !== 2
+              ? "Number of wallets: " + toolTipItem.formattedValue
+              : "Alph in range: " + formatNumbers(toolTipItem.raw as number);
           },
           afterTitle: (toolTipItems) => {
-            return toolTipItems[0].datasetIndex === 0 ? "w/ Genesis" : "w/o Genesis";
+            return toolTipItems[0].datasetIndex === 0 ||
+              toolTipItems[0].datasetIndex === 2
+              ? "w/ Genesis"
+              : "w/o Genesis";
           },
         },
       },
     },
     scales: {
-      y: {
+      y1: {
         type: "logarithmic",
+        position: "left",
+        ticks: {
+          color: ticksColor,
+        },
+        grid: {
+          color: gridColor,
+        },
+      },
+      y2: {
+        type: "logarithmic",
+        position: "right",
         ticks: {
           color: ticksColor,
         },
@@ -68,18 +85,28 @@ export const setHoldingsGraphData = (
 ) => {
   const genesisColor = theme === "white" ? "#a5b4fc" : "#6366f1";
   const noGenesisColor = theme === "white" ? "#60a5fa" : "#3b82f6";
+  const perRangeColor = theme === "white" ? "#fb7185" : "#cc7e6c";
   const data = {
     labels,
     datasets: [
       {
         label: "Include Genesis*",
-        data: Object.values(holdings[0] ?? []),
+        data: Object.values(holdings[0] ?? []).map((el) => el.amount),
         backgroundColor: genesisColor,
+        yAxisID: "y1",
       },
       {
         label: "Exclude Genesis*",
-        data: Object.values(holdings[1] ?? []),
+        data: Object.values(holdings[1] ?? []).map((el) => el.amount),
         backgroundColor: noGenesisColor,
+        yAxisID: "y1",
+        hidden: true,
+      },
+      {
+        label: "Alph in range",
+        data: Object.values(holdings[0] ?? []).map((el) => el.balance),
+        backgroundColor: perRangeColor,
+        yAxisID: "y2",
       },
     ],
   };

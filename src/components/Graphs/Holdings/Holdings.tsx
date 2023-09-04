@@ -31,6 +31,7 @@ function Holdings() {
   const theme = useAppSelector((state) => state.pages.theme);
 
   const { data: holdingsData, isLoading, error } = useGetHoldings();
+
   let holdings = holdingsData ? holdingsData : [null, null];
 
   const onResizeChart = () => {

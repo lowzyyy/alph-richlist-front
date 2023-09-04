@@ -66,6 +66,12 @@ function Wallets({ pageNum }: Props) {
     <div>
       <Navigation pageNumber={pageNum} />
       <FilterSection />
+      {data && data?.active_addresses !== 0 && (
+        <p className="pl-2 text-sm xs:text-base">
+          {data?.active_addresses}
+          {data?.active_addresses > 1 ? " results" : " result"}
+        </p>
+      )}
       {!!data?.active_addresses && (
         <WalletsList
           wallets={data?.addresses as Wallet[]}
