@@ -17,7 +17,9 @@ import { setGlobalLoading } from "@/src/store/pagesSlice";
 const resetBodySettings = (theme: "white" | "dark") => {
   document.body.style.overflowY = "auto";
   document.body.style.backgroundColor =
-    theme === "white" ? `var(--body-bg-default-white)` : `var(--body-bg-default-dark)`;
+    theme === "white"
+      ? `var(--body-bg-default-white)`
+      : `var(--body-bg-default-dark)`;
 };
 
 export const filterSliderWidth = "w-28";
@@ -57,7 +59,7 @@ function FilterModal() {
   return (
     <div
       onClick={onModal}
-      className="fixed left-0 top-0 h-full w-full bg-slate-200 bg-opacity-40 backdrop-blur-[2px] dark:bg-gray-900 dark:bg-opacity-60 "
+      className="fixed left-0 top-0 z-20 h-full w-full bg-slate-200 bg-opacity-40 backdrop-blur-[2px] dark:bg-gray-900 dark:bg-opacity-60 "
     >
       <div
         className={`mx-auto flex h-[450px]

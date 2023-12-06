@@ -11,6 +11,8 @@ import Wallets from "../src/components/Wallets/Wallets";
 import Holdings from "@/src/components/Graphs/Holdings/Holdings";
 import { setTheme } from "@/src/store/pagesSlice";
 import TotalAddresses from "@/src/components/Graphs/TotalAddresses/TotalAddresses";
+import { HandHeart } from "@phosphor-icons/react";
+import DonationModal from "@/src/components/DonationModal/DonationModal";
 
 type Props = {
   url: string;
@@ -25,6 +27,8 @@ export default function Home() {
   const dispatch = useAppDispatch();
   const globalLoading = useAppSelector((state) => state.pages.globalLoading);
   const { sort, order, filter, age, balance, zeroOuts, dormant } = router.query;
+  const [showDonation, setShowDonation] = useState(false);
+
   // set query parameters on redux
   useEffect(() => {
     dispatch(
@@ -66,6 +70,16 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      {showDonation && <DonationModal setShowDonation={setShowDonation} />}
+      {!showDonation && (
+        <button
+          onClick={() => setShowDonation(true)}
+          className={`fixed left-0 top-14 flex cursor-pointer flex-col items-center gap-1 rounded-r-md bg-rose-500 p-1 text-xs text-white dark:bg-yellow-600  xs:p-2 `}
+        >
+          <span>Donate</span>
+          <HandHeart weight="fill" size={18} className="text-orange-100" />
+        </button>
+      )}
       <div className="flex justify-center text-sm md:text-base ">
         <div>
           Addresses per:{" "}

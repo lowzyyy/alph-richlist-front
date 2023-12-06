@@ -46,7 +46,7 @@ function SearchAddress() {
   return (
     <div
       onClick={onModal}
-      className="fixed left-0 top-0 h-full w-full bg-slate-200 bg-opacity-40 backdrop-blur-[2px] dark:bg-gray-900 dark:bg-opacity-60 "
+      className="fixed left-0 top-0 z-20 h-full w-full bg-slate-200 bg-opacity-40 backdrop-blur-[2px] dark:bg-gray-900 dark:bg-opacity-60 "
     >
       <div
         style={{
@@ -94,7 +94,8 @@ function SearchAddress() {
             )}
             {data && data.index && (
               <span className="px-3 text-sm xs:text-base md:px-0 xl:max-w-[80%] 2xl:max-w-[70%]">
-                With Genesis: {<br />}#<span className="font-semibold">{data.index}</span>
+                With Genesis: {<br />}#
+                <span className="font-semibold">{data.index}</span>
               </span>
             )}
           </div>
@@ -112,7 +113,11 @@ function SearchAddress() {
             <p className="mb-2 px-3 md:mb-0">No results.</p>
           )}
           {isLoading && (
-            <CircleDashed className="mx-auto mb-4 animate-spin" size={30} weight="bold" />
+            <CircleDashed
+              className="mx-auto mb-4 animate-spin"
+              size={30}
+              weight="bold"
+            />
           )}
           {error && <p>ERROR CONTACTING SERVER...</p>}
         </div>
