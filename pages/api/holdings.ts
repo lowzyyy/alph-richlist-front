@@ -1,5 +1,5 @@
 import { AddressHoldings } from "@/src/components/Graphs/Holdings/HoldingsTypes";
-import { getAPI } from "@/src/globalHelpers";
+import { getAPI, headerForSkip } from "@/src/globalHelpers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -8,7 +8,9 @@ export default async function handler(
 ) {
   try {
     const API = await getAPI();
-    const response = await fetch(`${API}/holdings`);
+    const response = await fetch(`${API}/holdings`, {
+      headers: { [headerForSkip]: "true" },
+    });
     if (!response.status) throw Error(`ERROR HOLDINGS: ${response.status}`);
 
     const result = await response.json();

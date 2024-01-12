@@ -1,6 +1,6 @@
 import { AddressHoldings } from "@/src/components/Graphs/Holdings/HoldingsTypes";
 import { TotalAddressPerDate } from "@/src/components/Graphs/TotalAddresses/TotalAddressesTypes";
-import { getAPI } from "@/src/globalHelpers";
+import { getAPI, headerForSkip } from "@/src/globalHelpers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -9,7 +9,10 @@ export default async function handler(
 ) {
   try {
     const API = await getAPI();
-    const response = await fetch(`${API}/totalAddresses`);
+    console.log(`${API}/totalAddresses`);
+    const response = await fetch(`${API}/totalAddresses`, {
+      headers: { [headerForSkip]: "true" },
+    });
     if (!response.status)
       throw Error(`ERROR TOTAL ADDRESSES: ${response.status}`);
 

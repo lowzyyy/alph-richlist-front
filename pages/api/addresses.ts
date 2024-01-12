@@ -1,5 +1,5 @@
 import { Addresses } from "@/src/components/Wallets/WalletTypes";
-import { getAPI } from "@/src/globalHelpers";
+import { getAPI, headerForSkip } from "@/src/globalHelpers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -12,7 +12,10 @@ export default async function handler(
       .slice(0, -1);
 
     const API = await getAPI();
-    const response = await fetch(`${API}/addresses?${q}`);
+
+    const response = await fetch(`${API}/addresses?${q}`, {
+      headers: { [headerForSkip]: "true" },
+    });
     if (!response.status) throw Error(`ERROR ADDRESSES: ${response.status}`);
 
     const result = await response.json();

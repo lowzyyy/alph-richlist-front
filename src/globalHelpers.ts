@@ -3,7 +3,11 @@ export {};
 // export const STATS_API = "https://alephium.ono.re/api/stats/addresses";
 // export const STATS_API = "localhost:3001/addresses";
 export const ALEPHIUM_EXPLORER = "https://explorer.alephium.org";
+export const TUNNEL_MANAGER_API = "https://tunnel-manager.up.railway.app";
 // export const HOLDINGS_API = "https://alph-holdings.up.railway.app";
+
+const headersArr = ["ngrok-skip-browser-warning", "Bypass-Tunnel-Reminder"];
+export const headerForSkip = headersArr[0];
 
 // dollar balance format
 export const ALPH_BASE = 10 ** 18;
@@ -188,21 +192,32 @@ export const genesis_addresses = [
   "17CtvwRZsaAhDjVLDm1YWNigKDETZbpcwqbrSkSsnV3XH",
 ];
 
+// export const getAPI = async () => {
+//   const apiRes = await fetch(
+//     `${TUNNEL_MANAGER_API}/getApi?term=alph-richlist`,
+//     {
+//       headers: {
+//         Authorization: `Bearer ${process.env.TUNNEL_MANAGER_KEY}`,
+//       },
+//     }
+//   );
+//   if (!apiRes.ok) console.log(`ERROR TUNNEL API: ${apiRes.status}`);
+
+//   const { data } = await apiRes.json();
+
+//   return (data && data.url) ?? null;
+// };
 export const getAPI = async () => {
   const ngrokRes = await fetch("https://api.ngrok.com/tunnels", {
     headers: {
       Authorization: `Bearer ${process.env.ngrok_api_key}`,
-      "ngrok-version": "2",
+      "Ngrok-Version": "2",
     },
   });
   if (!ngrokRes.ok) console.log(`ERROR NGROK API: ${ngrokRes.status}`);
 
   const { tunnels } = await ngrokRes.json();
 
-  const url: string = tunnels.find(
-    (t: any) =>
-      t.public_url.startsWith("https") && t.metadata === "alph-richlist"
-  ).public_url;
-
-  return url;
+  return tunnels.filter((t: any) => t.metadata === "alph-richlist")[0]
+    .public_url;
 };

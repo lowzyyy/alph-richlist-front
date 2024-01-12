@@ -1,5 +1,5 @@
 import { AddressResult } from "@/src/components/SearchAddress/SearchAddressTypes";
-import { getAPI } from "@/src/globalHelpers";
+import { getAPI, headerForSkip } from "@/src/globalHelpers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -9,7 +9,9 @@ export default async function handler(
   try {
     const API = await getAPI();
     const address = req.query.fullAddress;
-    const response = await fetch(`${API}/address/${address}`);
+    const response = await fetch(`${API}/address/${address}`, {
+      headers: { [headerForSkip]: "true" },
+    });
     if (!response.status) throw Error(`ERROR ADDRESS: ${response.status}`);
 
     const result = await response.json();
