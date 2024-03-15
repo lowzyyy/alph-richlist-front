@@ -1,3 +1,4 @@
+import { donation_address } from "@/src/globalHelpers";
 import { HandHeart } from "@phosphor-icons/react";
 import React, { Dispatch, SetStateAction } from "react";
 
@@ -33,7 +34,7 @@ function DonationModal({ setShowDonation }: Props) {
           />
         </p>
         <p className="mt-4 text-center text-xs font-bold text-rose-600 dark:text-amber-500 xs:text-sm md:text-base">
-          12J8rmA29dRs9bEk266KABj5ybP3kqxG9me5hzUKgkGk5
+          {donation_address}
         </p>
         <p className="mt-4 text-center">Thank you.</p>
       </div>

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { get } from "@vercel/edge-config";
+import { get, getAll } from "@vercel/edge-config";
 
 export const config = {
   matcher: ["/((?!_next|api/auth).*)"],
@@ -8,6 +8,7 @@ export const config = {
 export async function middleware(req: NextRequest) {
   try {
     const isInMaintenanceMode = await get<boolean>("isInMaintenanceMode");
+    console.log(isInMaintenanceMode);
     if (!isInMaintenanceMode) {
       if (req.nextUrl.pathname === "/maintenance") {
         req.nextUrl.pathname = `/`;

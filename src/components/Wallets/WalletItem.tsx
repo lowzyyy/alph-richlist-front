@@ -29,8 +29,8 @@ type Props = {
 
 const tagColor = {
   Genesis: "bg-violet-300",
-  Pool: "bg-green-400",
-  Exchange: "bg-rose-400",
+  Pool: "bg-green-500",
+  Exchange: "bg-teal-200",
   Reserved: "bg-orange-300",
   Other: "bg-blue-400",
 };
@@ -44,17 +44,7 @@ function WalletItem({ w, alphPrice, walletNumber, hidePosition }: Props) {
 
   // tag
   let tagName =
-    w.name && w.name.includes(".com")
-      ? w.name.replace(".com", "")
-      : w.name
-      ? w.name
-      : isItGenesis
-      ? "Genesis"
-      : isItReserved
-      ? "Reserved"
-      : null;
-
-  const fullTagName = tagName;
+    w.name ?? (isItGenesis ? "Genesis" : isItReserved ? "Reserved" : w.name);
 
   tagName = tagName ? tagName[0].toUpperCase() + tagName.slice(1) : null;
   let tagType = "Other";
@@ -65,7 +55,7 @@ function WalletItem({ w, alphPrice, walletNumber, hidePosition }: Props) {
     <span
       style={{ fontFamily: `${robMono.style.fontFamily}` }}
       data-tooltip-id="tag"
-      data-tooltip-content={`${fullTagName}`}
+      data-tooltip-content={`${tagName}`}
       className={`overflow-x-hidden whitespace-nowrap rounded-md p-1 text-xs text-black
                   xl:text-sm  ${
                     tagColor[tagType as keyof typeof tagColor] ?? "bg-blue-400"
@@ -78,7 +68,8 @@ function WalletItem({ w, alphPrice, walletNumber, hidePosition }: Props) {
 
   // address
   const addressShort =
-    w.address.slice(0, walletLen) + (walletLen >= w.address.length ? "" : "...");
+    w.address.slice(0, walletLen) +
+    (walletLen >= w.address.length ? "" : "...");
 
   // balance
   const balanceHint = w.balanceHint;
@@ -119,7 +110,9 @@ function WalletItem({ w, alphPrice, walletNumber, hidePosition }: Props) {
       <div className="flex min-w-0 flex-shrink flex-col gap-3 xs:w-full xs:gap-2 sm:w-auto  ">
         <span className={`flex justify-between sm:gap-1`}>
           <span className={`flex gap-2 `}>
-            {!hidePosition && <span className="font-semibold">{walletNumber}</span>}
+            {!hidePosition && (
+              <span className="font-semibold">{walletNumber}</span>
+            )}
             <Link
               href={`${ALEPHIUM_EXPLORER}/addresses/${w.address}`}
               target="_blank"
@@ -141,7 +134,12 @@ function WalletItem({ w, alphPrice, walletNumber, hidePosition }: Props) {
               {`${balanceHint}`}{" "}
               {balanceType === "locked" && lockedBalanceHint !== "0" && (
                 <>
-                  (<LockSimple size={12} weight="fill" className="text-red-500" />
+                  (
+                  <LockSimple
+                    size={12}
+                    weight="fill"
+                    className="text-red-500"
+                  />
                   {`${lockedBalanceHint}`})
                 </>
               )}

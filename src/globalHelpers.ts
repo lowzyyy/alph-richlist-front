@@ -70,6 +70,8 @@ export const formatInsOuts = (amount: number, windowWidth: number) => {
 export const filterCbSize = 24;
 export const filterCbColor = "text-indigo-500";
 
+export const donation_address = "17Q4mT4XPHtvftzyF48on8GgxKN7gfZSwUBfNbdyFhPds";
+
 // Genesis and reserved addresses
 export const genesis_addresses = [
   "1FmM8ehu5tF16oTSMS3d11nAfjmMvkinLPCMR7iE9HqVk",
