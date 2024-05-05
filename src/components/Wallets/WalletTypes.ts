@@ -1,8 +1,8 @@
 export type Wallet = {
   address: string;
-  updated_on: string;
-  first_tx_recv: number;
-  last_tx_recv: number;
+  updated_on: number;
+  first_tx_recv: number | null; //null because we dont have uniswap info
+  last_tx_recv: number | null; //null because we dont have uniswap info
   first_tx_send: number | null;
   last_tx_send: number | null;
   balance: number;

@@ -5,6 +5,7 @@ import { Tooltip } from "react-tooltip";
 // globals
 import {
   ALEPHIUM_EXPLORER,
+  ETHERSCAN_ALPH,
   formatInsOuts,
   formatLocked,
   getUsdBalanceString,
@@ -32,6 +33,7 @@ const tagColor = {
   Pool: "bg-green-500",
   Exchange: "bg-teal-200",
   Reserved: "bg-orange-300",
+  Uniswap: "bg-fuchsia-400",
   Other: "bg-blue-400",
 };
 
@@ -87,11 +89,15 @@ function WalletItem({ w, alphPrice, walletNumber, hidePosition }: Props) {
     year: "numeric",
     day: "numeric",
   };
-  const lastIn = new Date(w.last_tx_recv).toLocaleString(undefined, options);
+  const lastIn = w.last_tx_recv
+    ? new Date(w.last_tx_recv).toLocaleString(undefined, options)
+    : "----------";
   const lastOut = w.last_tx_send
     ? new Date(w.last_tx_send).toLocaleString(undefined, options)
     : "----------";
-  const firstIn = new Date(w.first_tx_recv).toLocaleString(undefined, options);
+  const firstIn = w.first_tx_recv
+    ? new Date(w.first_tx_recv).toLocaleString(undefined, options)
+    : "----------";
   const firstOut = w.first_tx_send
     ? new Date(w.first_tx_send).toLocaleString(undefined, options)
     : "----------";
@@ -114,7 +120,11 @@ function WalletItem({ w, alphPrice, walletNumber, hidePosition }: Props) {
               <span className="font-semibold">{walletNumber}</span>
             )}
             <Link
-              href={`${ALEPHIUM_EXPLORER}/addresses/${w.address}`}
+              href={
+                w.type !== "Uniswap"
+                  ? `${ALEPHIUM_EXPLORER}/addresses/${w.address}`
+                  : `${ETHERSCAN_ALPH}?a=${w.address}`
+              }
               target="_blank"
               className={`text-blue-700 hover:text-blue-500 dark:text-amber-600 dark:hover:text-yellow-500 `}
               style={{ fontFamily: `${robMono.style.fontFamily}` }}

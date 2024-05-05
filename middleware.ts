@@ -8,7 +8,6 @@ export const config = {
 export async function middleware(req: NextRequest) {
   try {
     const isInMaintenanceMode = await get<boolean>("isInMaintenanceMode");
-    console.log(isInMaintenanceMode);
     if (!isInMaintenanceMode) {
       if (req.nextUrl.pathname === "/maintenance") {
         req.nextUrl.pathname = `/`;

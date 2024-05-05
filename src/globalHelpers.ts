@@ -4,6 +4,8 @@ export {};
 // export const STATS_API = "localhost:3001/addresses";
 export const ALEPHIUM_EXPLORER = "https://explorer.alephium.org";
 export const TUNNEL_MANAGER_API = "https://tunnel-manager.up.railway.app";
+export const ETHERSCAN_ALPH =
+  "https://etherscan.io/token/0x590f820444fa3638e022776752c5eef34e2f89a6";
 // export const HOLDINGS_API = "https://alph-holdings.up.railway.app";
 
 const headersArr = ["ngrok-skip-browser-warning", "Bypass-Tunnel-Reminder"];
@@ -59,6 +61,7 @@ export const formatLocked = (amount: string) => {
 
 // ins out format
 export const formatInsOuts = (amount: number, windowWidth: number) => {
+  if (amount < 0) return "-";
   let decimals = 1;
   decimals = windowWidth > 1024 ? 2 : 1;
   if (amount > 1_000_000) return (amount / 1_000_000).toFixed(decimals) + "M";
